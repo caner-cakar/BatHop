@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - NormalPlatform
+  - BrokenPlatform
+  - AppearingPlatform
+  - DeathPlatform
+  - CloudPlatform
   layers:
   - Default
   - TransparentFX
