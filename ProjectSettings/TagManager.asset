@@ -10,6 +10,7 @@ TagManager:
   - AppearingPlatform
   - DeathPlatform
   - CloudPlatform
+  - Center
   layers:
   - Default
   - TransparentFX

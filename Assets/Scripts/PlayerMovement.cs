@@ -6,10 +6,10 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
 
-    public float jumpY = 19f; 
-    public float jumpX = -3.2f;
+    public float jumpY = 17f; 
+    public float jumpX = -2.9f;
     private bool isCenter;
-    private bool isJumping;
+    private bool isJumping =false;
     private bool onBrokenPlatform;
 
     Vector3 characterPos;
@@ -104,4 +104,7 @@ public class PlayerMovement : MonoBehaviour
                 isCenter = false;
             }
     }
+
+
+    
 }
