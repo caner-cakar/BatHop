@@ -51,11 +51,11 @@ public class PlayerMovement : MonoBehaviour
     public void OnCollisionEnter2D(Collision2D other) 
     {
         if(other.gameObject.tag == "Ground" || other.gameObject.tag =="NormalPlatform" 
-        || other.gameObject.tag =="AppearingPlatform"|| other.gameObject.tag =="BrokenPlatform")
+        || other.gameObject.tag =="Appear"|| other.gameObject.tag =="BrokenPlatform")
         {
             isJumping = false;
             Centering(other);
-            if(other.gameObject.tag =="NormalPlatform" || other.gameObject.tag =="AppearingPlatform"|| other.gameObject.tag =="BrokenPlatform")
+            if(other.gameObject.tag =="NormalPlatform" || other.gameObject.tag =="Appear"|| other.gameObject.tag =="BrokenPlatform")
                 FindObjectOfType<Score>().UpdateScore();
         }
         if(other.gameObject.tag=="CloudPlatform")

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5846506634184378858}
   - component: {fileID: 5846506634184378853}
   - component: {fileID: 5846506634184378856}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BrokenPlatform
   m_TagString: BrokenPlatform
   m_Icon: {fileID: 0}

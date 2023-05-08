@@ -7,11 +7,11 @@ TagManager:
   - Ground
   - NormalPlatform
   - BrokenPlatform
-  - AppearingPlatform
   - DeathPlatform
   - CloudPlatform
   - Center
   - SettingsButton
+  - Appear
   layers:
   - Default
   - TransparentFX
@@ -20,7 +20,7 @@ TagManager:
   - Water
   - UI
   - Settings
-  - 
+  - Platforms
   - 
   - 
   - 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4026571248965812439}
   - component: {fileID: 4026571248965812438}
   - component: {fileID: 4026571248965812437}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CloudPlatform
   m_TagString: CloudPlatform
   m_Icon: {fileID: 0}
