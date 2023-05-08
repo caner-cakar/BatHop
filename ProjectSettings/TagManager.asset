@@ -11,6 +11,7 @@ TagManager:
   - DeathPlatform
   - CloudPlatform
   - Center
+  - SettingsButton
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Settings
   - 
   - 
   - 
@@ -56,4 +57,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3106336553
+    locked: 0
+  - name: Settings
+    uniqueID: 4044568819
     locked: 0

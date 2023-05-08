@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void TouchControl()
     {
-        if(Input.touchCount>0 && Input.touches[0].phase == TouchPhase.Began)
+        if(Input.touchCount>0 && Input.touches[0].phase == TouchPhase.Began && gameObject.tag !="SettingsButton")
         {
             touchPos = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
             
