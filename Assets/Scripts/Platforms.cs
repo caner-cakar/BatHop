@@ -5,11 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class Platforms : MonoBehaviour
 {
+    [SerializeField]private GameObject ground;
+    [SerializeField]private GameObject normalPlatform;
+    [SerializeField]private GameObject brokenPlatform;
     [SerializeField]private GameObject appearingPlatform;
+    [SerializeField]private GameObject cloudPlatform;
+    [SerializeField]private GameObject deathPlatform;
+
+    float lastPositionX;
+    float lastPositionY;
+    float distanceX = 0.65f;
+    float distanceY = -2f;
+
+
     [SerializeField]private float interval =1f;
     void Start()
     {
-        StartCoroutine(AppearPlatform());
+        lastPositionY = ground.transform.position.y;
+        lastPositionX = ground.transform.position.x;
+        SpawnFirstLevel();
     }
 
     void Update()
@@ -39,5 +53,18 @@ public class Platforms : MonoBehaviour
         {
             afterDeath();
         }
+    }
+
+    private void SpawnFirstLevel()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            float xPosition = lastPositionX + distanceX;
+            //float yPosition = lastPositionY + distanceY;
+            Instantiate(normalPlatform,new Vector3(xPosition,distanceY,0f),Quaternion.identity);
+            Instantiate(normalPlatform,new Vector3(-xPosition,distanceY,0f),Quaternion.identity);
+            lastPositionX = xPosition + distanceX;
+        }
+        
     }
 }

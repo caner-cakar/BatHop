@@ -55,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
         {
             isJumping = false;
             Centering(other);
+            if(other.gameObject.tag =="NormalPlatform" || other.gameObject.tag =="AppearingPlatform"|| other.gameObject.tag =="BrokenPlatform")
+                FindObjectOfType<Score>().UpdateScore();
         }
         if(other.gameObject.tag=="CloudPlatform")
         {
