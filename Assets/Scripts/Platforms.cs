@@ -5,11 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Platforms : MonoBehaviour
 {
-    [SerializeField] GameObject appear;
-    [SerializeField] private float interval  = 1f;
     public void Start()
     {
-        //StartCoroutine(Appear());
     }
 
     void Update()
@@ -30,18 +27,4 @@ public class Platforms : MonoBehaviour
             afterDeath();
         }
     }
-
-    IEnumerator Appear()
-    {
-         while (true)
-        {
-            yield return new WaitForSeconds(interval);
-            appear.SetActive(false);
-            yield return new WaitForSeconds(interval);
-            appear.SetActive(true);
-                
-            
-        }
-    }
-
 }

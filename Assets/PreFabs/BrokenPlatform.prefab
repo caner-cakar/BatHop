@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5846506634184378859}
   - component: {fileID: 5846506634184378858}
   - component: {fileID: 5846506634184378853}
-  - component: {fileID: 5846506634184378856}
+  - component: {fileID: 5830654684610142482}
   m_Layer: 7
   m_Name: BrokenPlatform
   m_TagString: BrokenPlatform
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.44545776, g: 0.6415094, b: 0.4266643, a: 1}
+  m_Color: {r: 0.8396226, g: 0.7931749, b: 0.18614274, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4, y: 0.1}
   m_EdgeRadius: 0
---- !u!61 &5846506634184378856
+--- !u!61 &5830654684610142482
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
