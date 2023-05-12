@@ -79,6 +79,10 @@ public class PlayerMovement : MonoBehaviour
         {
             FindObjectOfType<Timer>().ExtraTime();
         }
+        if(other.gameObject.tag == "Reverse")
+        {
+            FindObjectOfType<CameraContoller>().StartCoroutine(FindObjectOfType<CameraContoller>().RotateCamera());
+        }
     }
     private void OnTriggerExit2D(Collider2D other) 
     {
