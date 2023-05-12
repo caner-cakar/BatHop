@@ -8,10 +8,14 @@ public class Score : MonoBehaviour
     [SerializeField] Text scoreText;
     int score = 0;
 
+    [SerializeField] Text starScoreText;
+    int starScore = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         scoreText.text = ""+score;
+        starScoreText.text = ""+starScore;
     }
 
     // Update is called once per frame
@@ -23,5 +27,11 @@ public class Score : MonoBehaviour
     {
         score++;
         scoreText.text = ""+score;
+    }
+
+    public void UpdateStarScore()
+    {
+        starScore++;
+        starScoreText.text = ""+starScore;
     }
 }

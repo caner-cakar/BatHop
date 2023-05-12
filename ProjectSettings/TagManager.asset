@@ -12,6 +12,8 @@ TagManager:
   - Center
   - SettingsButton
   - Appear
+  - Star
+  - Health
   layers:
   - Default
   - TransparentFX

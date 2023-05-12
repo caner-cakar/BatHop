@@ -14,10 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 characterPos;
     Vector3 centerPos;
-    Vector2 touchPos;
-
-    private float onStayTimer=0;
-    
+    Vector2 touchPos;    
     
     void Start()
     {
@@ -73,7 +70,14 @@ public class PlayerMovement : MonoBehaviour
         {
             onBrokenPlatform = true;
             StartCoroutine(BrokenPlatform(other));
-            onStayTimer = 0;
+        }
+        if(other.gameObject.tag == "Star")
+        {
+            FindObjectOfType<Score>().UpdateStarScore();
+        }
+        if(other.gameObject.tag == "Health")
+        {
+            FindObjectOfType<Timer>().ExtraTime();
         }
     }
     private void OnTriggerExit2D(Collider2D other) 

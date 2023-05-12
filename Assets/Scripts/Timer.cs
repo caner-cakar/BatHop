@@ -37,4 +37,9 @@ public class Timer : MonoBehaviour
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1f;
     }
+
+    public void ExtraTime()
+    {
+        time += 5f;
+    }
 }
