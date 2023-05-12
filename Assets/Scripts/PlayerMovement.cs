@@ -27,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         TouchControl();
-        BrokenPlatform();
     }
 
     private void TouchControl()
@@ -57,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
             Centering(other);
             if(other.gameObject.tag =="NormalPlatform" || other.gameObject.tag =="Appear"|| other.gameObject.tag =="BrokenPlatform")
                 FindObjectOfType<Score>().UpdateScore();
+                
         }
         if(other.gameObject.tag=="CloudPlatform")
         {
@@ -72,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         if(other.gameObject.tag == "BrokenPlatform")
         {
             onBrokenPlatform = true;
+            StartCoroutine(BrokenPlatform(other));
             onStayTimer = 0;
         }
     }
@@ -82,12 +83,18 @@ public class PlayerMovement : MonoBehaviour
             onBrokenPlatform = false;
         }
     }
-    private void BrokenPlatform()
+    
+    IEnumerator BrokenPlatform(Collider2D other)
     {
-        onStayTimer += Time.deltaTime;
-        if(onBrokenPlatform && onStayTimer>1)
+        yield return new WaitForSeconds(1f);
+        if(onBrokenPlatform)
         {
+            Destroy(other.gameObject);
             FindObjectOfType<Platforms>().afterDeath();
+        }
+        else
+        {
+            Destroy(other.gameObject);
         }
     }
     private void Centering(Collision2D other)

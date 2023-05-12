@@ -5,10 +5,14 @@ using UnityEngine;
 public class CameraContoller : MonoBehaviour
 {
     [SerializeField] private Transform player;
+    [SerializeField] Vector3 offset;
+    [SerializeField] float damping;
 
+    private Vector3 velocity = Vector3.zero;
 
-    void Update()
+    void FixedUpdate()
     {
-        transform.position = new Vector3(player.position.x,player.position.y+2f,transform.position.z);
+        Vector3 movePosition = player.position + offset;
+        transform.position = Vector3.SmoothDamp(transform.position, movePosition, ref velocity, damping);
     }
 }

@@ -676,6 +676,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 558541206}
+  offset: {x: 0, y: 2, z: -10}
+  damping: 0.2
 --- !u!1001 &530755154
 PrefabInstance:
   m_ObjectHideFlags: 0
