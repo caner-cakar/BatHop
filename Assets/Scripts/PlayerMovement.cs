@@ -74,14 +74,17 @@ public class PlayerMovement : MonoBehaviour
         if(other.gameObject.tag == "Star")
         {
             FindObjectOfType<Score>().UpdateStarScore();
+            Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "Health")
         {
             FindObjectOfType<Timer>().ExtraTime();
+            Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "Reverse")
         {
             FindObjectOfType<CameraContoller>().StartCoroutine(FindObjectOfType<CameraContoller>().RotateCamera());
+            Destroy(other.gameObject);
         }
     }
     private void OnTriggerExit2D(Collider2D other) 
