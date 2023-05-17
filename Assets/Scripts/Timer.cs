@@ -22,10 +22,12 @@ public class Timer : MonoBehaviour
     {
         time -= Time.deltaTime;
 
-        if (time <= 0)
+        if (time <= 0f)
         {
             StartCoroutine(RestartGame());
         }
+        if(time>=45f)
+            time = 45f;
 
         healthSlider.value = time;
     }
@@ -38,8 +40,8 @@ public class Timer : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public void ExtraTime()
+    public void ExtraTime(int extra)
     {
-        time += 5f;
+        time = time + extra;
     }
 }

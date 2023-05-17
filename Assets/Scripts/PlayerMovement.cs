@@ -9,8 +9,12 @@ public class PlayerMovement : MonoBehaviour
     public float jumpY = 17f; 
     public float jumpX = -2.9f;
     private bool isCenter;
-    private bool isJumping =false;
+    private bool isJumping = false;
+    private bool isFalling = false;
+    private float fallTime = 0f;
+    [SerializeField] float maxFallTime = 0.3f;
     private bool onBrokenPlatform;
+
 
     Vector3 characterPos;
     Vector3 centerPos;
@@ -24,6 +28,14 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         TouchControl();
+        if(isFalling && rb.velocity.y <0.1f)
+        {
+            fallTime += Time.deltaTime;
+            if(fallTime>=maxFallTime)
+            {
+                FindObjectOfType<Platforms>().afterDeath();
+            }
+        }
     }
 
     private void TouchControl()
@@ -31,17 +43,7 @@ public class PlayerMovement : MonoBehaviour
         if(Input.touchCount>0 && Input.touches[0].phase == TouchPhase.Began && gameObject.tag !="SettingsButton")
         {
             touchPos = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
-            
-            if(transform.position.x > touchPos.x && !isJumping)
-            {
-                rb.velocity = new Vector2(jumpX, jumpY);
-                isJumping = true;
-            }
-            if(transform.position.x < touchPos.x && !isJumping)
-            {
-                rb.velocity = new Vector2(-jumpX, jumpY);
-                isJumping = true;
-            }
+            Jump();
         }
     }
     public void OnCollisionEnter2D(Collision2D other) 
@@ -50,9 +52,15 @@ public class PlayerMovement : MonoBehaviour
         || other.gameObject.tag =="Appear"|| other.gameObject.tag =="BrokenPlatform")
         {
             isJumping = false;
+            isFalling = false;
+            fallTime = 0f;
             Centering(other);
-            if(other.gameObject.tag =="NormalPlatform" || other.gameObject.tag =="Appear"|| other.gameObject.tag =="BrokenPlatform")
+            if(other.gameObject.tag =="NormalPlatform"|| other.gameObject.tag =="BrokenPlatform")
                 FindObjectOfType<Score>().UpdateScore();
+            if(other.gameObject.tag=="Appear")
+            {
+
+            }
                 
         }
         if(other.gameObject.tag=="CloudPlatform")
@@ -62,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
         if(other.gameObject.tag=="DeathPlatform")
         {
             FindObjectOfType<Platforms>().afterDeath();
-        }    
+        }
     }
     private void OnTriggerEnter2D(Collider2D other) 
     {
@@ -78,12 +86,13 @@ public class PlayerMovement : MonoBehaviour
         }
         if(other.gameObject.tag == "Health")
         {
-            FindObjectOfType<Timer>().ExtraTime();
+            FindObjectOfType<Timer>().ExtraTime(5);
             Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "Reverse")
         {
             FindObjectOfType<CameraContoller>().StartCoroutine(FindObjectOfType<CameraContoller>().RotateCamera());
+            FindObjectOfType<Timer>().ExtraTime(7);
             Destroy(other.gameObject);
         }
     }
@@ -125,6 +134,28 @@ public class PlayerMovement : MonoBehaviour
             }
     }
 
+    private void OnCollisionExit2D(Collision2D other) 
+    {
+        if(other.gameObject.tag == "Appear" && rb.velocity.y<0.1f)
+        {
+            FindObjectOfType<Platforms>().afterDeath();
+        }
+    }
 
-    
+
+    private void Jump()
+    {
+        if(transform.position.x > touchPos.x && !isJumping && !isFalling)
+        {
+            rb.velocity = new Vector2(jumpX, jumpY);
+            isJumping = true;
+            isFalling = true;
+        }
+        if(transform.position.x < touchPos.x && !isJumping && !isFalling)
+        {
+            rb.velocity = new Vector2(-jumpX, jumpY);
+            isJumping = true;
+            isFalling = true;
+        }
+    }
 }
