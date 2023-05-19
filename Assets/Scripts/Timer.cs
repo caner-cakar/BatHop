@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour
 {
     public Slider healthSlider;
+    [SerializeField] Transform player;
+    float playerY;
     const float gameTime = 45f;
     float time;
 
@@ -16,20 +18,27 @@ public class Timer : MonoBehaviour
         healthSlider.value = gameTime;
         time = gameTime;
     }
+    void Start()
+    {
+        playerY = player.transform.position.y;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        time -= Time.deltaTime;
-
-        if (time <= 0f)
+        if(playerY != player.transform.position.y)
         {
-            StartCoroutine(RestartGame());
-        }
-        if(time>=45f)
-            time = 45f;
+            time -= Time.deltaTime;
 
-        healthSlider.value = time;
+            if (time <= 0f)
+            {
+                StartCoroutine(RestartGame());
+            }
+            if(time>=45f)
+                time = 45f;
+
+            healthSlider.value = time;
+        }
     }
 
     IEnumerator RestartGame()

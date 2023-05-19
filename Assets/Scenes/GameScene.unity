@@ -155,6 +155,7 @@ MonoBehaviour:
   startLevel: {fileID: 1529304799}
   levelPatternList:
   - {fileID: 232687592198753900, guid: 371b47161f403a2489541bfe0195d746, type: 3}
+  - {fileID: 5868337637092195762, guid: 4ee08025319fca744b5bbe4a654b86f4, type: 3}
   player: {fileID: 558541204}
 --- !u!4 &83795517
 Transform:
@@ -860,7 +861,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558541204}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.6, z: 0}
+  m_LocalPosition: {x: 0, y: -2.631624, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -928,7 +929,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpY: 16
   jumpX: -2.9
-  maxFallTime: 0.2
+  maxFallTime: 0.13
 --- !u!1 &624837701
 GameObject:
   m_ObjectHideFlags: 0
@@ -2112,6 +2113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 424633887}
+  player: {fileID: 558541206}
 --- !u!4 &1729665207
 Transform:
   m_ObjectHideFlags: 0
