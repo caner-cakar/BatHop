@@ -5,33 +5,39 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    [SerializeField] Text scoreText;
-    int score = 0;
+    Text highScoreText;
+    int highScore = 0;
 
-    [SerializeField] Text starScoreText;
-    int starScore = 0;
+    Text currentScoreText;
+    public int currentScore = 0;
 
-    // Start is called before the first frame update
+    private bool scoring = true;
+
     void Start()
     {
-        scoreText.text = ""+score;
-        starScoreText.text = ""+starScore;
+        highScoreText = GameObject.Find("HighScoreText").GetComponent<Text>();
+        currentScoreText = GameObject.Find("CurrentScoreText").GetComponent<Text>();
+
+        highScoreText.text = highScore.ToString();
+        currentScoreText.text = currentScore.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void UpdateScore()
     {
-        score++;
-        scoreText.text = ""+score;
+        if(scoring)
+        {
+            currentScore++;
+            currentScoreText.text = ""+currentScore;
+        }
     }
 
-    public void UpdateStarScore()
+    public void KeepScore()
     {
-        starScore++;
-        starScoreText.text = ""+starScore;
+        scoring = true;
+    }
+
+    public void StopScore()
+    {
+        scoring = false;
     }
 }

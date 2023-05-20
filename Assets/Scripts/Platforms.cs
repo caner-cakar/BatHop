@@ -13,18 +13,4 @@ public class Platforms : MonoBehaviour
     {
 
     }
-    public void afterDeath()
-    {
-
-        SceneManager.LoadScene("GameScene");
-    }
-
-    public void BrokenPlatform(float onStayTimer)
-    {
-        onStayTimer += Time.deltaTime;
-        if(onStayTimer>1)
-        {
-            afterDeath();
-        }
-    }
 }

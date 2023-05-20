@@ -11,7 +11,6 @@ public class CameraContoller : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
 
 
-
     void FixedUpdate()
     {
         Vector3 movePosition = player.position + offset;
@@ -26,6 +25,4 @@ public class CameraContoller : MonoBehaviour
         Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         //Physics2D.gravity = -Physics2D.gravity;
     }
-
-
 }

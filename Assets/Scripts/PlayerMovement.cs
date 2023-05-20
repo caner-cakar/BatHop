@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
             fallTime += Time.deltaTime;
             if(fallTime>=maxFallTime)
             {
-                FindObjectOfType<Platforms>().afterDeath();
+                FindObjectOfType<GameSceneController>().DeathLogic();
             }
         }
     }
@@ -61,11 +61,11 @@ public class PlayerMovement : MonoBehaviour
         }
         if(other.gameObject.tag=="CloudPlatform")
         {
-            FindObjectOfType<Platforms>().afterDeath();
+            FindObjectOfType<GameSceneController>().DeathLogic();
         }
         if(other.gameObject.tag=="DeathPlatform")
         {
-            FindObjectOfType<Platforms>().afterDeath();
+            FindObjectOfType<GameSceneController>().DeathLogic();
         }
     }
     private void OnTriggerEnter2D(Collider2D other) 
@@ -77,7 +77,6 @@ public class PlayerMovement : MonoBehaviour
         }
         if(other.gameObject.tag == "Star")
         {
-            FindObjectOfType<Score>().UpdateStarScore();
             Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "Health")
@@ -106,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
         if(onBrokenPlatform)
         {
             Destroy(other.gameObject);
-            FindObjectOfType<Platforms>().afterDeath();
+            FindObjectOfType<GameSceneController>().DeathLogic();
         }
         else
         {
@@ -134,12 +133,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if(other.gameObject.tag == "Appear" && rb.velocity.y<0.1f)
         {
-            FindObjectOfType<Platforms>().afterDeath();
+            FindObjectOfType<GameSceneController>().DeathLogic();
         }
     }
 
 
     private void Jump()
+
     {
         if(transform.position.x > touchPos.x && !isJumping && !isFalling)
         {
@@ -154,4 +154,5 @@ public class PlayerMovement : MonoBehaviour
             isFalling = true;
         }
     }
+
 }
