@@ -6,9 +6,8 @@ using UnityEngine.UI;
 public class Score : MonoBehaviour
 {
     Text highScoreText;
-    int highScore = 0;
-
     Text currentScoreText;
+    public Text DHighScoreText;
     public int currentScore = 0;
 
     private bool scoring = true;
@@ -18,7 +17,7 @@ public class Score : MonoBehaviour
         highScoreText = GameObject.Find("HighScoreText").GetComponent<Text>();
         currentScoreText = GameObject.Find("CurrentScoreText").GetComponent<Text>();
 
-        highScoreText.text = highScore.ToString();
+        highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
         currentScoreText.text = currentScore.ToString();
     }
 
@@ -28,6 +27,17 @@ public class Score : MonoBehaviour
         {
             currentScore++;
             currentScoreText.text = ""+currentScore;
+
+            if(currentScore>PlayerPrefs.GetInt("HighScore", 0))
+            {
+                PlayerPrefs.SetInt("HighScore", currentScore);
+                DHighScoreText.text = "New High Score: "+PlayerPrefs.GetInt("HighScore", 0).ToString();
+                FindObjectOfType<GameSceneController>().isHighScore = true;
+            }
+            else
+            {
+                FindObjectOfType<GameSceneController>().isHighScore = false;
+            }
         }
     }
 

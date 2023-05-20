@@ -8,11 +8,15 @@ public class PlayerMovement : MonoBehaviour
 
     public float jumpY = 17f; 
     public float jumpX = -2.9f;
+
     private bool isCenter;
+
     private bool isJumping = false;
     private bool isFalling = false;
+    public bool isDead = false;
     private float fallTime = 0f;
     [SerializeField] float maxFallTime = 0.3f;
+
     private bool onBrokenPlatform;
 
 
@@ -22,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     
     void Start()
     {
+        isDead = false;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -96,20 +101,17 @@ public class PlayerMovement : MonoBehaviour
         if(other.gameObject.tag == "BrokenPlatform")
         {
             onBrokenPlatform = false;
+            Destroy(other.gameObject);
         }
     }
     
     IEnumerator BrokenPlatform(Collider2D other)
     {
         yield return new WaitForSeconds(1f);
-        if(onBrokenPlatform)
+        if(onBrokenPlatform && other != null)
         {
             Destroy(other.gameObject);
             FindObjectOfType<GameSceneController>().DeathLogic();
-        }
-        else
-        {
-            Destroy(other.gameObject);
         }
     }
     private void Centering(Collision2D other)
@@ -141,13 +143,13 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
 
     {
-        if(transform.position.x > touchPos.x && !isJumping && !isFalling)
+        if(transform.position.x > touchPos.x && !isJumping && !isFalling && !isDead)
         {
             rb.velocity = new Vector2(jumpX, jumpY);
             isJumping = true;
             isFalling = true;
         }
-        if(transform.position.x < touchPos.x && !isJumping && !isFalling)
+        if(transform.position.x < touchPos.x && !isJumping && !isFalling && !isDead)
         {
             rb.velocity = new Vector2(-jumpX, jumpY);
             isJumping = true;

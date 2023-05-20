@@ -12,6 +12,9 @@ public class GameSceneController : MonoBehaviour
 
     private GameObject losePanel;
     private GameObject highScorePanel;
+
+    public bool isHighScore;
+
     public void Awake()
     {
         settingsCanvas.SetActive(false);
@@ -60,9 +63,12 @@ public class GameSceneController : MonoBehaviour
 
     public void DeathLogic()
     {
-        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x,Camera.main.transform.position.y,Camera.main.transform.position.z);
-        Score score1 = gameObject.AddComponent<Score>();
-        score1.StopScore();
-        LosePanel();
+        FindObjectOfType<PlayerMovement>().isDead = true;
+        FindObjectOfType<CameraContoller>().StopCamera();
+        FindObjectOfType<Score>().StopScore();
+        if(!isHighScore)
+            LosePanel();
+        if(isHighScore)
+            HighScorePanel();
     }
 }

@@ -10,11 +10,19 @@ public class CameraContoller : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
 
+    private bool isCameraWork=true;
+
+    
+
+
 
     void FixedUpdate()
     {
-        Vector3 movePosition = player.position + offset;
-        transform.position = Vector3.SmoothDamp(transform.position, movePosition, ref velocity, damping);
+        if(isCameraWork)
+        {
+            Vector3 movePosition = player.position + offset;
+            transform.position = Vector3.SmoothDamp(transform.position, movePosition, ref velocity, damping);
+        }
     }
 
     public IEnumerator RotateCamera()
@@ -25,4 +33,17 @@ public class CameraContoller : MonoBehaviour
         Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         //Physics2D.gravity = -Physics2D.gravity;
     }
+
+    public void StopCamera()
+    {
+        isCameraWork = false;
+        transform.position = new Vector3(transform.position.x,transform.position.y,transform.position.z);
+    }
+
+    public void RunCamera()
+    {
+        isCameraWork = true;
+    }
+
+
 }
