@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 characterPos;
     Vector3 centerPos;
     Vector2 touchPos;    
-    
+
     void Start()
     {
         isDead = false;

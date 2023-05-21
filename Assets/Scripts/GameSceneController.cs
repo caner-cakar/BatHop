@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneController : MonoBehaviour
 {
-    public PlayerMovement playerMovement;
-
     [SerializeField] GameObject settingsCanvas;
     [SerializeField] GameObject deathCanvas;
 

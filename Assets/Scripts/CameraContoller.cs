@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraContoller : MonoBehaviour
 {
-    [SerializeField] private Transform player;
+    private GameObject player;
     [SerializeField] Vector3 offset;
     [SerializeField] float damping;
 
@@ -12,6 +12,10 @@ public class CameraContoller : MonoBehaviour
 
     private bool isCameraWork=true;
 
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
     
 
 
@@ -20,7 +24,7 @@ public class CameraContoller : MonoBehaviour
     {
         if(isCameraWork)
         {
-            Vector3 movePosition = player.position + offset;
+            Vector3 movePosition = player.transform.position + offset;
             transform.position = Vector3.SmoothDamp(transform.position, movePosition, ref velocity, damping);
         }
     }

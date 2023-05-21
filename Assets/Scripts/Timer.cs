@@ -7,10 +7,11 @@ using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour
 {
     public Slider healthSlider;
-    [SerializeField] Transform player;
+    //[SerializeField] Transform player;
     float playerY;
     const float gameTime = 45f;
     float time;
+    GameObject player;
 
     void Awake()
     {
@@ -20,6 +21,7 @@ public class Timer : MonoBehaviour
     }
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         playerY = player.transform.position.y;
     }
 

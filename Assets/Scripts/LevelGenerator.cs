@@ -8,7 +8,7 @@ public class LevelGenerator : MonoBehaviour
     private const float playerDistanceDestroyLevelPart = 10f;
     [SerializeField] private Transform startLevel; 
     [SerializeField] private List<Transform> levelPatternList; 
-    [SerializeField] private GameObject player;
+    private GameObject player;
 
     private List<Transform> spawnedLevelParts = new List<Transform>();
 
@@ -22,6 +22,11 @@ public class LevelGenerator : MonoBehaviour
         {
             SpawnLevelPart();
         }
+    }
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
     }
     private void Update() 
     {
