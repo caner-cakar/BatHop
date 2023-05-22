@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,10 +20,10 @@ public class PlayerMovement : MonoBehaviour
 
     private bool onBrokenPlatform;
 
-
     Vector3 characterPos;
     Vector3 centerPos;
     Vector2 touchPos;    
+    
 
     void Start()
     {
@@ -45,10 +46,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void TouchControl()
     {
-        if(Input.touchCount>0 && Input.touches[0].phase == TouchPhase.Began && gameObject.tag !="SettingsButton")
+        if(Input.touchCount>0 && Input.touches[0].phase == TouchPhase.Began)
         {
             touchPos = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
-            Jump();
+            if (!EventSystem.current.IsPointerOverGameObject(0))
+            {
+                Jump();
+            }
+            
         }
     }
     public void OnCollisionEnter2D(Collision2D other) 
@@ -156,5 +161,7 @@ public class PlayerMovement : MonoBehaviour
             isFalling = true;
         }
     }
+
+
 
 }

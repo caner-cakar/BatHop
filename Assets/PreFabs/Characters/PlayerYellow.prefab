@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ebc6dd1c3b927f4c8d71be62c373eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  button: {fileID: 6297512984127197431, guid: 2313b1b58bdcf43449a12ba2ecb0e5d3, type: 3}
   jumpY: 16
   jumpX: -2.9
   isDead: 0

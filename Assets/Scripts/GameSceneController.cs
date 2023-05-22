@@ -55,7 +55,11 @@ public class GameSceneController : MonoBehaviour
         Score score1 = gameObject.AddComponent<Score>();
         score1.KeepScore();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        
+    }
+
+    public void Menu()
+    {
+        SceneManager.LoadScene("StartScene");
     }
 
 
