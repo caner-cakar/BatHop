@@ -35,7 +35,10 @@ public class CharacterSelect : MonoBehaviour
 
     public void ExitPanel()
     {
-        skins[selectedCharacter].SetActive(false);
+        for(int i=0; i<skins.Length;i++)
+        {
+            skins[i].SetActive(false);
+        }
         characterPanel.SetActive(false);
         FindObjectOfType<StartSceneController>().startButton.SetActive(true);
         FindObjectOfType<StartSceneController>().characterButton.SetActive(true);
