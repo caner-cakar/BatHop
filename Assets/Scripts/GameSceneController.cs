@@ -38,6 +38,7 @@ public class GameSceneController : MonoBehaviour
 
     public void LosePanel()
     {
+        Time.timeScale = 1;
         deathCanvas.SetActive(true);
         losePanel.SetActive(true);
         highScorePanel.SetActive(false);
@@ -45,6 +46,7 @@ public class GameSceneController : MonoBehaviour
 
     public void HighScorePanel()
     {
+        Time.timeScale = 1;
         deathCanvas.SetActive(true);
         highScorePanel.SetActive(true);
         losePanel.SetActive(false);
@@ -63,11 +65,12 @@ public class GameSceneController : MonoBehaviour
     }
 
 
-    public void DeathLogic()
+    public IEnumerator DeathLogic()
     {
         FindObjectOfType<PlayerMovement>().isDead = true;
         FindObjectOfType<CameraContoller>().StopCamera();
         FindObjectOfType<Score>().StopScore();
+        yield return new WaitForSeconds(1f);
         if(!isHighScore)
             LosePanel();
         if(isHighScore)

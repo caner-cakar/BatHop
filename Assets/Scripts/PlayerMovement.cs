@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 characterPos;
     Vector3 centerPos;
     Vector2 touchPos;    
+
+    float time;
     
 
     void Start()
@@ -33,13 +35,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        time += Time.deltaTime;
         TouchControl();
         if(isFalling && rb.velocity.y <0.1f)
         {
             fallTime += Time.deltaTime;
             if(fallTime>=maxFallTime)
             {
-                FindObjectOfType<GameSceneController>().DeathLogic();
+                DeathFall();
+                StartCoroutine(FindObjectOfType<GameSceneController>().DeathLogic());
             }
         }
     }
@@ -72,11 +76,12 @@ public class PlayerMovement : MonoBehaviour
         if(other.gameObject.tag=="CloudPlatform")
         {
             DeathFall();
-            FindObjectOfType<GameSceneController>().DeathLogic();
+            StartCoroutine(FindObjectOfType<GameSceneController>().DeathLogic());
         }
         if(other.gameObject.tag=="DeathPlatform")
         {
-            FindObjectOfType<GameSceneController>().DeathLogic();
+            DeathFall();
+            StartCoroutine(FindObjectOfType<GameSceneController>().DeathLogic());
         }
     }
     private void OnTriggerEnter2D(Collider2D other) 
@@ -116,8 +121,9 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if(onBrokenPlatform && other != null)
         {
-            Destroy(other.gameObject);
-            FindObjectOfType<GameSceneController>().DeathLogic();
+            DeathFall();
+            StartCoroutine(FindObjectOfType<GameSceneController>().DeathLogic());
+            Destroy(other.gameObject);   
         }
     }
     private void Centering(Collision2D other)
@@ -141,7 +147,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if(other.gameObject.tag == "Appear" && rb.velocity.y<0.1f)
         {
-            FindObjectOfType<GameSceneController>().DeathLogic();
+            DeathFall();
+            StartCoroutine(FindObjectOfType<GameSceneController>().DeathLogic());
         }
     }
 
@@ -165,7 +172,29 @@ public class PlayerMovement : MonoBehaviour
 
     private void DeathFall()
     {
-        rb.velocity = new Vector3(0f,-5f,0f);
+        StartCoroutine(RotateForDuration(2f));
+        GetComponent<BoxCollider2D>().enabled = false;
+        rb.gravityScale = 1f;
+        rb.velocity = new Vector3(0f, -2f, 0f);
+    }
+
+    private IEnumerator RotateForDuration(float duration)
+    {
+        float startRotation = transform.rotation.eulerAngles.z;
+        float targetRotation = startRotation + (360f * duration);
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+            float currentRotation = Mathf.Lerp(startRotation, targetRotation, t);
+            transform.rotation = Quaternion.Euler(0f, 0f, currentRotation);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.rotation = Quaternion.Euler(0f, 0f, targetRotation);
     }
 
 
