@@ -71,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if(other.gameObject.tag=="CloudPlatform")
         {
+            DeathFall();
             FindObjectOfType<GameSceneController>().DeathLogic();
         }
         if(other.gameObject.tag=="DeathPlatform")
@@ -162,6 +163,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void DeathFall()
+    {
+        rb.velocity = new Vector3(0f,-5f,0f);
+    }
 
 
 }

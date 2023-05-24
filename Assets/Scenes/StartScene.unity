@@ -500,6 +500,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6056732344561384155, guid: 41973663ed17c6640bfa749c7d412d07, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1174835177}
+    - target: {fileID: 6056732344561384155, guid: 41973663ed17c6640bfa749c7d412d07, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ExitSettings
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056732344561384155, guid: 41973663ed17c6640bfa749c7d412d07, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: StartSceneController, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6056732345505311759, guid: 41973663ed17c6640bfa749c7d412d07, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
