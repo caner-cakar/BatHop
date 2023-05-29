@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2492285177870351548}
   - component: {fileID: 2492285177870351539}
   - component: {fileID: 2492285177870351551}
+  - component: {fileID: -4486124871330902475}
   m_Layer: 0
   m_Name: PlayerYellow
   m_TagString: Player
@@ -146,8 +147,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ebc6dd1c3b927f4c8d71be62c373eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 6297512984127197431, guid: 2313b1b58bdcf43449a12ba2ecb0e5d3, type: 3}
   jumpY: 16
   jumpX: -2.9
   isDead: 0
   maxFallTime: 0.13
+--- !u!114 &-4486124871330902475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2492285177870351536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4939c4699fa8a884d80ebab869837961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playedGameCount: 0
