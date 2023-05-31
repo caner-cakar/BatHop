@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3966665660915274707}
   - component: {fileID: 3966665660915274716}
   - component: {fileID: 3966665660915274704}
-  - component: {fileID: -9028207132986993066}
   m_Layer: 0
   m_Name: PlayerRed
   m_TagString: Player
@@ -151,16 +150,3 @@ MonoBehaviour:
   jumpX: -2.9
   isDead: 0
   maxFallTime: 0.13
---- !u!114 &-9028207132986993066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3966665660915274719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4939c4699fa8a884d80ebab869837961, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playedGameCount: 0

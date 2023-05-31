@@ -5,12 +5,13 @@ using UnityEngine;
 public class Invisibility : MonoBehaviour
 {
     private int playedGameCount = 0;
-    private SpriteRenderer spriteRenderer;
     private Score score;
+
+    public GameObject bats;
     void Start()
     {
+        bats.SetActive(false);
         playedGameCount = PlayerPrefs.GetInt("playedGameCount");
-        spriteRenderer = GetComponent<SpriteRenderer>();
         score = FindObjectOfType<Score>();
         CountGame();
         
@@ -18,7 +19,7 @@ public class Invisibility : MonoBehaviour
 
     void Update()
     {
-        if(playedGameCount == 5)
+        if(playedGameCount >=2f && score.currentScore >=5f && score.currentScore<10f)
             BeInvisible();
     }
 
@@ -26,21 +27,14 @@ public class Invisibility : MonoBehaviour
     {
         playedGameCount++;
         PlayerPrefs.SetInt("playedGameCount",playedGameCount);
-        if(playedGameCount == 5)
+        if(playedGameCount >=2f)
         {
             PlayerPrefs.SetInt("playedGameCount",0);
         }
     }
 
-    public void BeInvisible()
+    private void BeInvisible()
     {
-        if(score.currentScore == 5)
-        {
-            spriteRenderer.enabled = false;
-        }
-        if(score.currentScore == 10)
-        {
-            spriteRenderer.enabled = true;
-        } 
+        bats.SetActive(true);
     }
 }
