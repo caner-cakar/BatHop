@@ -29,6 +29,8 @@ public class BatsMovement : MonoBehaviour
 
     public void BeInvisible()
     {
+        Transform lastChild;
+        float lastChildDistance =0f;
         CenterPosition();
         foreach (Transform child in transform)
         {
@@ -41,14 +43,18 @@ public class BatsMovement : MonoBehaviour
                 Vector3 direction = centerPoint.position - child.position;
                 child.Translate(direction.normalized * moveSpeed * Time.deltaTime);
 
-                if(distance < 0.1f)
+                if(distance < 0.2f)
                 {
                     SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
                     spriteRenderer.enabled = false;
-                    playerSprite.enabled = false;
                 }
+                lastChild = child;
+                lastChildDistance =Vector3.Distance(positionA,positionB);
             } 
-        } 
+        }
+        if(lastChildDistance<0.0001f)
+            playerSprite.enabled=false;
+       
     }
 
     public void BeVisible()
