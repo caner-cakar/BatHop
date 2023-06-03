@@ -5,9 +5,15 @@ using UnityEngine;
 public class BatsMovement : MonoBehaviour
 {
     public Transform centerPoint;
+    public Transform lastBat;
+    
     public float moveSpeed = 0.3f;
+    private int visibleScore;
+    private bool isVisible = true;
+
     private Score score;
-    GameObject player; 
+    GameObject player;
+
     SpriteRenderer playerSprite;
     private void Start() 
     {
@@ -18,9 +24,9 @@ public class BatsMovement : MonoBehaviour
     
     private void Update()
     {
-        if(score.currentScore >=5f && score.currentScore<10f)
+        if(score.currentScore >=5f &&  isVisible ==true)
             BeInvisible();
-        if(score.currentScore >10f )
+        if(score.currentScore >= visibleScore + 5 && isVisible == false)
         {
             BeVisible();
             gameObject.transform.SetParent(null);
@@ -29,7 +35,7 @@ public class BatsMovement : MonoBehaviour
 
     public void BeInvisible()
     {
-        Transform lastChild;
+        
         float lastChildDistance =0f;
         CenterPosition();
         foreach (Transform child in transform)
@@ -48,17 +54,21 @@ public class BatsMovement : MonoBehaviour
                     SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
                     spriteRenderer.enabled = false;
                 }
-                lastChild = child;
-                lastChildDistance =Vector3.Distance(positionA,positionB);
+                
+                lastChildDistance =Vector3.Distance(lastBat.position,positionB);
             } 
         }
-        if(lastChildDistance<0.0001f)
+        if(lastChildDistance<0.01f)
+        {
             playerSprite.enabled=false;
-       
+            visibleScore = score.currentScore;
+            isVisible =false;
+        }   
     }
 
     public void BeVisible()
     {
+        float lastChildDistance =0f;
         foreach (Transform child in transform)
         {
             if (child.name.StartsWith("Bat"))
@@ -68,10 +78,18 @@ public class BatsMovement : MonoBehaviour
                 Vector3 targetPosition = new Vector3(Random.Range(-50, 50), Random.Range(-50, 50), child.position.z);
 
                 Vector3 direction = targetPosition - child.position;
-                child.Translate(direction.normalized *10f * Time.deltaTime);
-                playerSprite.enabled = true;
+                child.Translate(direction.normalized *10f * Time.deltaTime);        
+                
             }
         }
+        playerSprite.enabled=true;   
+        Vector3 positionB = centerPoint.transform.position;
+        lastChildDistance =Vector3.Distance(lastBat.position,positionB);
+        if(lastChildDistance>5f)
+        {
+            visibleScore = score.currentScore;
+            isVisible =false;
+        }   
         Destroy(gameObject,5f);
     }
 
