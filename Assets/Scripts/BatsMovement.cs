@@ -29,7 +29,7 @@ public class BatsMovement : MonoBehaviour
         if(score.currentScore >= visibleScore + 5 && isVisible == false)
         {
             BeVisible();
-            gameObject.transform.SetParent(null);
+            
         }
     }
 
@@ -46,8 +46,12 @@ public class BatsMovement : MonoBehaviour
                 Vector3 positionB = centerPoint.transform.position;
                 float distance  = Vector3.Distance(positionA,positionB);
 
+                Vector3 rbDirection = centerPoint.position - child.position;
+                Rigidbody2D rb = child.GetComponent<Rigidbody2D>();
+                rb.velocity = rbDirection.normalized * moveSpeed;
+
                 Vector3 direction = centerPoint.position - child.position;
-                child.Translate(direction.normalized * moveSpeed * Time.deltaTime);
+                //child.Translate(direction.normalized * moveSpeed * Time.deltaTime);
 
                 if(distance < 0.2f)
                 {
@@ -58,7 +62,7 @@ public class BatsMovement : MonoBehaviour
                 lastChildDistance =Vector3.Distance(lastBat.position,positionB);
             } 
         }
-        if(lastChildDistance<0.01f)
+        if(lastChildDistance<0.1f)
         {
             playerSprite.enabled=false;
             visibleScore = score.currentScore;
@@ -75,11 +79,12 @@ public class BatsMovement : MonoBehaviour
             {
                 SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
                 spriteRenderer.enabled = true;
-                Vector3 targetPosition = new Vector3(Random.Range(-50, 50), Random.Range(-50, 50), child.position.z);
 
+                Vector3 targetPosition = centerPoint.position + new Vector3(Random.Range(-50f, 50f), Random.Range(-50f, 50f), 0f);
                 Vector3 direction = targetPosition - child.position;
-                child.Translate(direction.normalized *10f * Time.deltaTime);        
-                
+
+                Rigidbody2D childRigidbody = child.GetComponent<Rigidbody2D>();
+                childRigidbody.MovePosition(child.position + direction.normalized * 10f * Time.deltaTime);         
             }
         }
         playerSprite.enabled=true;   
