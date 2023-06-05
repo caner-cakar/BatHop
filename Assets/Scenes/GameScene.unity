@@ -156,6 +156,7 @@ MonoBehaviour:
   levelPatternList:
   - {fileID: 232687592198753900, guid: 371b47161f403a2489541bfe0195d746, type: 3}
   - {fileID: 5868337637092195762, guid: 4ee08025319fca744b5bbe4a654b86f4, type: 3}
+  - {fileID: 5059922861396492829, guid: 1df99e0f0f4159540a2f9089f06054df, type: 3}
 --- !u!4 &83795517
 Transform:
   m_ObjectHideFlags: 0
