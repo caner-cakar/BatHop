@@ -7,9 +7,9 @@ public class BatsMovement : MonoBehaviour
     public Transform centerPoint;
     public Transform lastBat;
     
-    public float moveSpeed = 0.3f;
+    public float moveSpeed = 5;
     private int visibleScore;
-    private bool isVisible = true;
+    private bool isVisible;
 
     private Score score;
     GameObject player;
@@ -17,6 +17,7 @@ public class BatsMovement : MonoBehaviour
     SpriteRenderer playerSprite;
     private void Start() 
     {
+        isVisible = true;
         score = FindObjectOfType<Score>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerSprite = player.GetComponent<SpriteRenderer>();
@@ -29,8 +30,10 @@ public class BatsMovement : MonoBehaviour
         if(score.currentScore >= visibleScore + 5 && isVisible == false)
         {
             BeVisible();
-            
+            gameObject.transform.SetParent(null);
         }
+        if(player.GetComponent<PlayerMovement>().isDead)
+            gameObject.transform.SetParent(null);
     }
 
     public void BeInvisible()
@@ -46,12 +49,8 @@ public class BatsMovement : MonoBehaviour
                 Vector3 positionB = centerPoint.transform.position;
                 float distance  = Vector3.Distance(positionA,positionB);
 
-                Vector3 rbDirection = centerPoint.position - child.position;
-                Rigidbody2D rb = child.GetComponent<Rigidbody2D>();
-                rb.velocity = rbDirection.normalized * moveSpeed;
-
                 Vector3 direction = centerPoint.position - child.position;
-                //child.Translate(direction.normalized * moveSpeed * Time.deltaTime);
+                child.Translate(direction.normalized * moveSpeed * Time.deltaTime);
 
                 if(distance < 0.2f)
                 {
@@ -79,12 +78,10 @@ public class BatsMovement : MonoBehaviour
             {
                 SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
                 spriteRenderer.enabled = true;
+                Vector3 targetPosition = new Vector3(Random.Range(-50, 50), Random.Range(-50, 50), child.position.z);
 
-                Vector3 targetPosition = centerPoint.position + new Vector3(Random.Range(-50f, 50f), Random.Range(-50f, 50f), 0f);
                 Vector3 direction = targetPosition - child.position;
-
-                Rigidbody2D childRigidbody = child.GetComponent<Rigidbody2D>();
-                childRigidbody.MovePosition(child.position + direction.normalized * 10f * Time.deltaTime);         
+                child.Translate(direction.normalized *10f * Time.deltaTime);    
             }
         }
         playerSprite.enabled=true;   

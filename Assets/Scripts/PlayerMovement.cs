@@ -172,6 +172,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void DeathFall()
     {
+        isDead = true;
         StartCoroutine(RotateForDuration(2f));
         GetComponent<BoxCollider2D>().enabled = false;
         rb.gravityScale = 1f;
