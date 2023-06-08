@@ -20,17 +20,17 @@ public class Invisibility : MonoBehaviour
     void Update()
     {
         if(playedGameCount >=2f && score.currentScore >=5f && score.currentScore<10f)
+        {
             BeInvisible();
+            PlayerPrefs.SetInt("playedGameCount",0);
+        }
     }
 
     public void CountGame()
     {
         playedGameCount++;
         PlayerPrefs.SetInt("playedGameCount",playedGameCount);
-        if(playedGameCount >=2f)
-        {
-            PlayerPrefs.SetInt("playedGameCount",0);
-        }
+        
     }
 
     private void BeInvisible()

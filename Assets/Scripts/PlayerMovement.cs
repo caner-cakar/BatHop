@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
+    SpriteRenderer playerSprite;
     private Rigidbody2D rb;
 
     public float jumpY = 17f; 
@@ -31,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isDead = false;
         rb = GetComponent<Rigidbody2D>();
+        playerSprite = GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -173,6 +175,7 @@ public class PlayerMovement : MonoBehaviour
     private void DeathFall()
     {
         isDead = true;
+        playerSprite.enabled=true;
         StartCoroutine(RotateForDuration(2f));
         GetComponent<BoxCollider2D>().enabled = false;
         rb.gravityScale = 1f;
