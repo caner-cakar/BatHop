@@ -35,6 +35,7 @@ public class Invisibility : MonoBehaviour
 
     private void BeInvisible()
     {
-        bats.SetActive(true);
+        if(bats !=null)
+            bats.SetActive(true);
     }
 }

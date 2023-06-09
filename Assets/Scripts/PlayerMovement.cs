@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
     
     IEnumerator BrokenPlatform(Collider2D other)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         if(onBrokenPlatform && other != null)
         {
             DeathFall();
