@@ -12,6 +12,7 @@ public class BatsMovement : MonoBehaviour
     float lastChildDistance;
     float visibleScore =5f;
     bool onPlayer=false;
+    public bool isPlayerDead = false;
 
     void Start()
     {
@@ -32,7 +33,7 @@ public class BatsMovement : MonoBehaviour
     {
         MoveTowardsTarget();
         StartCoroutine(ShakeBats());
-        if(scoreController.currentScore>visibleScore+20f)
+        if(scoreController.currentScore>visibleScore+15f)
         {
             BatsGetAway();
         }
@@ -40,10 +41,14 @@ public class BatsMovement : MonoBehaviour
 
     private void MoveTowardsTarget()
     {
-        Vector3 targetPosition = targetObject.transform.position;
-        Vector3 direction = targetPosition - gameObject.transform.position;
-        gameObject.transform.Translate(direction.normalized * 5f * Time.deltaTime);
-        lastChildDistance = Vector3.Distance(lastChild.position,targetObject.transform.position);
+        if(isPlayerDead==false)
+        {
+            Vector3 targetPosition = targetObject.transform.position;
+            Vector3 direction = targetPosition - gameObject.transform.position;
+            gameObject.transform.Translate(direction.normalized * 5f * Time.deltaTime);
+            lastChildDistance = Vector3.Distance(lastChild.position,targetObject.transform.position);
+        }
+        
         if(lastChildDistance<0.1f && !onPlayer )
         {
             visibleScore = scoreController.currentScore;
@@ -55,7 +60,7 @@ public class BatsMovement : MonoBehaviour
     {
         foreach (Transform bat in bats)
         {
-            float randomNumber = Random.Range(0f,0.05f);
+            float randomNumber = Random.Range(0f,0.01f);
             bat.localPosition += new Vector3(0f,randomNumber,0f);
             yield return new WaitForSeconds(0.01f);
 
@@ -68,9 +73,10 @@ public class BatsMovement : MonoBehaviour
     {
         foreach (Transform bat in bats)
         {
-            float randomNumber = Random.Range(0f,0.05f);
+            float randomNumber = Random.Range(0f,0.1f);
             bat.localPosition -= new Vector3(0f,randomNumber,0f);
+        
         }
-        Destroy(gameObject,2f);
+        Destroy(gameObject,5f);
     }
 }

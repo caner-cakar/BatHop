@@ -67,6 +67,8 @@ public class GameSceneController : MonoBehaviour
 
     public IEnumerator DeathLogic()
     {
+        if(FindObjectOfType<BatsMovement>() != null)
+            FindObjectOfType<BatsMovement>().isPlayerDead = true;
         FindObjectOfType<PlayerMovement>().isDead = true;
         FindObjectOfType<CameraContoller>().StopCamera();
         FindObjectOfType<Score>().StopScore();
