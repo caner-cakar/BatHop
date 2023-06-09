@@ -5,6 +5,11 @@ using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
+    CameraContoller cameraController;
+    Timer timerController;
+    GameSceneController gameSceneController;
+    Score scoreController;
+
     SpriteRenderer playerSprite;
     private Rigidbody2D rb;
 
@@ -12,10 +17,10 @@ public class PlayerMovement : MonoBehaviour
     public float jumpX = -2.9f;
 
     private bool isCenter;
-
     private bool isJumping = false;
     private bool isFalling = false;
     public bool isDead = false;
+
     private float fallTime = 0f;
     [SerializeField] float maxFallTime = 0.3f;
 
@@ -30,6 +35,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        scoreController = FindObjectOfType<Score>();
+        gameSceneController = FindObjectOfType<GameSceneController>();
+        timerController = FindObjectOfType<Timer>();
+        cameraController = FindObjectOfType<CameraContoller>();
         isDead = false;
         rb = GetComponent<Rigidbody2D>();
         playerSprite = GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>();
@@ -45,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
             if(fallTime>=maxFallTime)
             {
                 DeathFall();
-                StartCoroutine(FindObjectOfType<GameSceneController>().DeathLogic());
+                StartCoroutine(gameSceneController.DeathLogic());
             }
         }
     }
@@ -72,18 +81,18 @@ public class PlayerMovement : MonoBehaviour
             fallTime = 0f;
             Centering(other);
             if(other.gameObject.tag =="NormalPlatform"|| other.gameObject.tag =="BrokenPlatform")
-                FindObjectOfType<Score>().UpdateScore();
+                scoreController.UpdateScore();
                 
         }
         if(other.gameObject.tag=="CloudPlatform")
         {
             DeathFall();
-            StartCoroutine(FindObjectOfType<GameSceneController>().DeathLogic());
+            StartCoroutine(gameSceneController.DeathLogic());
         }
         if(other.gameObject.tag=="DeathPlatform")
         {
             DeathFall();
-            StartCoroutine(FindObjectOfType<GameSceneController>().DeathLogic());
+            StartCoroutine(gameSceneController.DeathLogic());
         }
     }
     private void OnTriggerEnter2D(Collider2D other) 
@@ -99,15 +108,17 @@ public class PlayerMovement : MonoBehaviour
         }
         if(other.gameObject.tag == "Health")
         {
-            FindObjectOfType<Timer>().ExtraTime(5);
+            timerController.ExtraTime(5);
             Destroy(other.gameObject);
         }
-        if(other.gameObject.tag == "Reverse")
+        if (other.gameObject.tag == "Reverse")
         {
-            FindObjectOfType<CameraContoller>().StartCoroutine(FindObjectOfType<CameraContoller>().RotateCamera());
-            FindObjectOfType<Timer>().ExtraTime(7);
+            cameraController.StopRotateCamera();
+            cameraController.StartRotateCamera();
+            timerController.ExtraTime(7);
             Destroy(other.gameObject);
         }
+        
     }
     private void OnTriggerExit2D(Collider2D other) 
     {
@@ -124,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
         if(onBrokenPlatform && other != null)
         {
             DeathFall();
-            StartCoroutine(FindObjectOfType<GameSceneController>().DeathLogic());
+            StartCoroutine(gameSceneController.DeathLogic());
             Destroy(other.gameObject);   
         }
     }
@@ -150,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
         if(other.gameObject.tag == "Appear" && rb.velocity.y<0.1f)
         {
             DeathFall();
-            StartCoroutine(FindObjectOfType<GameSceneController>().DeathLogic());
+            StartCoroutine(gameSceneController.DeathLogic());
         }
     }
 

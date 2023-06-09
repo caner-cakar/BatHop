@@ -101,5 +101,6 @@ public class BatsMovement : MonoBehaviour
         centerPoint = GameObject.FindGameObjectWithTag("Player").transform;
         centerPoint.position = GameObject.FindGameObjectWithTag("Player").transform.position; 
         gameObject.transform.position = GameObject.FindGameObjectWithTag("Player").transform.position; 
+        
     }
 }

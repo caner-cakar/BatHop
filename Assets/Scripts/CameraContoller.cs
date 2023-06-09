@@ -11,6 +11,9 @@ public class CameraContoller : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
 
     private bool isCameraWork=true;
+    public bool turnCamera=false;
+
+    private Coroutine rotateCameraCoroutine;
 
     void Start()
     {
@@ -29,13 +32,29 @@ public class CameraContoller : MonoBehaviour
         }
     }
 
-    public IEnumerator RotateCamera()
+    public void StartRotateCamera()
+    {
+        if (rotateCameraCoroutine == null)
+        {
+            rotateCameraCoroutine = StartCoroutine(RotateCameraCoroutine());
+        }
+    }
+
+    public void StopRotateCamera()
+    {
+        if (rotateCameraCoroutine != null)
+        {
+            StopCoroutine(rotateCameraCoroutine);
+            rotateCameraCoroutine = null;
+        }
+    }
+
+    private IEnumerator RotateCameraCoroutine()
     {
         Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
         yield return new WaitForSeconds(5f);
 
         Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        //Physics2D.gravity = -Physics2D.gravity;
     }
 
     public void StopCamera()
