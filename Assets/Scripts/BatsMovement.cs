@@ -33,7 +33,7 @@ public class BatsMovement : MonoBehaviour
     {
         MoveTowardsTarget();
         StartCoroutine(ShakeBats());
-        if(scoreController.currentScore>visibleScore+2f)
+        if(scoreController.currentScore>visibleScore+2f && onPlayer)
         {
             BatsGetAway();
         }
@@ -47,6 +47,7 @@ public class BatsMovement : MonoBehaviour
             Vector3 direction = targetPosition - gameObject.transform.position;
             gameObject.transform.Translate(direction.normalized * 5f * Time.deltaTime);
             lastChildDistance = Vector3.Distance(lastChild.position,targetObject.transform.position);
+            
         }
         
         if(lastChildDistance<0.1f && !onPlayer )
