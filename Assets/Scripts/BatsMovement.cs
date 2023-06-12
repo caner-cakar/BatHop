@@ -33,7 +33,7 @@ public class BatsMovement : MonoBehaviour
     {
         MoveTowardsTarget();
         StartCoroutine(ShakeBats());
-        if(scoreController.currentScore>visibleScore+15f)
+        if(scoreController.currentScore>visibleScore+2f)
         {
             BatsGetAway();
         }
@@ -60,11 +60,11 @@ public class BatsMovement : MonoBehaviour
     {
         foreach (Transform bat in bats)
         {
-            float randomNumber = Random.Range(0f,0.01f);
-            bat.localPosition += new Vector3(0f,randomNumber,0f);
+            float randomNumber = Random.Range(0f,0.1f);
+            bat.localPosition += new Vector3(0f,randomNumber * Time.deltaTime,0f);
             yield return new WaitForSeconds(0.01f);
 
-            bat.localPosition -= new Vector3(0f,randomNumber,0f);
+            bat.localPosition -= new Vector3(0f,randomNumber * Time.deltaTime,0f);
             yield return new WaitForSeconds(0.01f);
         }
     }
@@ -73,10 +73,11 @@ public class BatsMovement : MonoBehaviour
     {
         foreach (Transform bat in bats)
         {
-            float randomNumber = Random.Range(0f,0.1f);
-            bat.localPosition -= new Vector3(0f,randomNumber,0f);
+            float randomNumber = Random.Range(0f,5f);
+            bat.localPosition -= new Vector3(0f,randomNumber * Time.deltaTime,0f);
         
         }
+        isPlayerDead = true;
         Destroy(gameObject,5f);
     }
 }
