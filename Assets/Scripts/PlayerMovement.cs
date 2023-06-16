@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
-    CameraContoller cameraController;
+    CameraController cameraController;
     Timer timerController;
     GameSceneController gameSceneController;
     Score scoreController;
@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         scoreController = FindObjectOfType<Score>();
         gameSceneController = FindObjectOfType<GameSceneController>();
         timerController = FindObjectOfType<Timer>();
-        cameraController = FindObjectOfType<CameraContoller>();
+        cameraController = FindObjectOfType<CameraController>();
         isDead = false;
         rb = GetComponent<Rigidbody2D>();
         playerSprite = GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>();

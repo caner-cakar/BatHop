@@ -13,7 +13,6 @@ public class Score : MonoBehaviour
     [SerializeField] Text highScoreText;
     GameObject player;
     float playerY;
-
     private bool scoring = true;
 
     void Start()
@@ -52,8 +51,9 @@ public class Score : MonoBehaviour
     {
         moneyScore++;
         moneyScoreText.text=""+moneyScore;
-        int oldMoney = PlayerPrefs.GetInt("MoneyScore",0);
-        PlayerPrefs.SetInt("MoneyScore",moneyScore + oldMoney);
+        int money = PlayerPrefs.GetInt("MoneyScore");
+        PlayerPrefs.SetInt("MoneyScore",money+1);
+        
     }
 
     public void Update()
