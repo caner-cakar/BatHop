@@ -5,20 +5,27 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    Text highScoreText;
     Text currentScoreText;
-    public Text DHighScoreText;
+    Text moneyScoreText;
+    public int moneyScore = 0;
     public int currentScore = 0;
+
+    [SerializeField] Text highScoreText;
+    GameObject player;
+    float playerY;
 
     private bool scoring = true;
 
     void Start()
     {
-        highScoreText = GameObject.Find("HighScoreText").GetComponent<Text>();
         currentScoreText = GameObject.Find("CurrentScoreText").GetComponent<Text>();
+        moneyScoreText = GameObject.Find("MoneyScoreText").GetComponent<Text>();
 
-        highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
-        currentScoreText.text = currentScore.ToString();
+        currentScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+        moneyScoreText.text = PlayerPrefs.GetInt("MoneyScore",0).ToString();
+
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerY = player.transform.position.y;
     }
 
     public void UpdateScore()
@@ -31,13 +38,31 @@ public class Score : MonoBehaviour
             if(currentScore>PlayerPrefs.GetInt("HighScore", 0))
             {
                 PlayerPrefs.SetInt("HighScore", currentScore);
-                DHighScoreText.text = "New High Score: "+PlayerPrefs.GetInt("HighScore", 0).ToString();
+                highScoreText.text = "New High Score: "+PlayerPrefs.GetInt("HighScore", 0).ToString();
                 FindObjectOfType<GameSceneController>().isHighScore = true;
             }
             else
             {
                 FindObjectOfType<GameSceneController>().isHighScore = false;
             }
+        }
+    }
+
+    public void UpdateMoney()
+    {
+        moneyScore++;
+        moneyScoreText.text=""+moneyScore;
+        int oldMoney = PlayerPrefs.GetInt("MoneyScore",0);
+        PlayerPrefs.SetInt("MoneyScore",moneyScore + oldMoney);
+    }
+
+    public void Update()
+    {
+        if(playerY != player.transform.position.y)
+        {
+            moneyScoreText.text=""+moneyScore;
+            currentScoreText.text = ""+currentScore;
+            playerY = player.transform.position.y;
         }
     }
 
@@ -50,4 +75,6 @@ public class Score : MonoBehaviour
     {
         scoring = false;
     }
+
+    
 }

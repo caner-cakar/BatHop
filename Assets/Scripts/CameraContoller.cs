@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraContoller : MonoBehaviour
+public class CameraContoller  : MonoBehaviour
 {
     private GameObject player;
-    [SerializeField] Vector3 offset;
-    [SerializeField] float damping;
+    
+    public float followSpeed=5f;
+    public Vector3 offset;
 
-    private Vector3 velocity = Vector3.zero;
-
-    private bool isCameraWork=true;
-    public bool turnCamera=false;
+    
+    private bool isCameraWork = true;
 
     private Coroutine rotateCameraCoroutine;
 
@@ -19,16 +18,22 @@ public class CameraContoller : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
     }
-    
-
-
 
     void FixedUpdate()
     {
-        if(isCameraWork)
+        if (isCameraWork)
         {
-            Vector3 movePosition = player.transform.position + offset;
-            transform.position = Vector3.SmoothDamp(transform.position, movePosition, ref velocity, damping);
+            Vector3 targetPosition = transform.position;
+            targetPosition.x = player.transform.position.x;
+            
+            if(player.transform.position.y>=0.4f)
+            {
+                targetPosition.y = player.transform.position.y;
+                transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
+            }else 
+            {
+                transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
+            }
         }
     }
 
@@ -53,20 +58,17 @@ public class CameraContoller : MonoBehaviour
     {
         Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
         yield return new WaitForSeconds(5f);
-
         Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
     public void StopCamera()
     {
         isCameraWork = false;
-        transform.position = new Vector3(transform.position.x,transform.position.y,transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
     }
 
     public void RunCamera()
     {
         isCameraWork = true;
     }
-
-
 }

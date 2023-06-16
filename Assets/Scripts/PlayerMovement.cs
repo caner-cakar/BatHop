@@ -104,6 +104,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if(other.gameObject.tag == "Star")
         {
+            scoreController.UpdateMoney();
             Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "Health")
@@ -117,6 +118,12 @@ public class PlayerMovement : MonoBehaviour
             cameraController.StartRotateCamera();
             timerController.ExtraTime(7);
             Destroy(other.gameObject);
+        }
+
+        if(other.gameObject.tag == "Garlic")
+        {
+            DeathFall();
+            StartCoroutine(gameSceneController.DeathLogic());
         }
         
     }
