@@ -33,7 +33,7 @@ public class BatsMovement : MonoBehaviour
     {
         MoveTowardsTarget();
         StartCoroutine(ShakeBats());
-        if(scoreController.currentScore>visibleScore+2f && onPlayer)
+        if(scoreController.currentScore>visibleScore+10f && onPlayer)
         {
             BatsGetAway();
         }

@@ -8,6 +8,10 @@ public class CharacterSelect : MonoBehaviour
     public GameObject[] skins;
     public int selectedCharacter;
 
+    StartSceneController startSceneController;
+    private void Start() {
+        startSceneController = FindObjectOfType<StartSceneController>();
+    }
     public void ChangeNext()
     {
         skins[selectedCharacter].SetActive(false);
@@ -40,9 +44,10 @@ public class CharacterSelect : MonoBehaviour
             skins[i].SetActive(false);
         }
         characterPanel.SetActive(false);
-        FindObjectOfType<StartSceneController>().startButton.SetActive(true);
-        FindObjectOfType<StartSceneController>().characterButton.SetActive(true);
-        FindObjectOfType<StartSceneController>().settingsPanel.SetActive(false);
+        startSceneController.startButton.SetActive(true);
+        startSceneController.characterButton.SetActive(true);
+        startSceneController.settingsPanel.SetActive(false);
+        startSceneController.settingsButton.interactable = true;
         Time.timeScale = 1;
     }
 }
