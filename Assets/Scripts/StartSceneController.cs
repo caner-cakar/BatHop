@@ -12,10 +12,11 @@ public class StartSceneController : MonoBehaviour
 
     public GameObject startButton;
     public GameObject characterButton;
+    public GameObject characters;
 
-    public Text moneyScoreText;
     public void Awake()
     {
+        characters.SetActive(false);
         characterPanel.SetActive(false);
         settingsPanel.SetActive(false);
         startButton.SetActive(true);
@@ -29,7 +30,7 @@ public class StartSceneController : MonoBehaviour
 
     public void Settings()
     {
-        
+        characters.SetActive(false);
         startButton.SetActive(false);
         characterButton.SetActive(false);
         settingsButton.interactable = false;
@@ -38,6 +39,7 @@ public class StartSceneController : MonoBehaviour
     }
     public void ExitSettings()
     {
+        characters.SetActive(false);
         characterPanel.SetActive(false);
         settingsPanel.SetActive(false);
         startButton.SetActive(true);
@@ -47,13 +49,12 @@ public class StartSceneController : MonoBehaviour
 
     public void CharacterPanel()
     {
+        characters.SetActive(true);
         characterButton.SetActive(false);
         characterPanel.SetActive(true);
         settingsPanel.SetActive(false);
         startButton.SetActive(false);
         settingsButton.interactable = false;
-        FindObjectOfType<CharacterSelect>().skins[PlayerPrefs.GetInt("SelectedCharacter",0)].SetActive(true);
-        moneyScoreText.text=""+PlayerPrefs.GetInt("MoneyScore",0).ToString();
         Time.timeScale = 0;
     }
 
