@@ -55,7 +55,7 @@ public class StartSceneController : MonoBehaviour
         settingsPanel.SetActive(false);
         startButton.SetActive(false);
         settingsButton.interactable = false;
-        Time.timeScale = 0;
+        FindObjectOfType<CharacterSelect>().skins[FindObjectOfType<CharacterSelect>().selectedCharacter].SetActive(true); 
     }
 
 }

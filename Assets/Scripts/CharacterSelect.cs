@@ -6,26 +6,28 @@ using TMPro;
 
 public class CharacterSelect : MonoBehaviour
 {
-    [SerializeField] GameObject characterPanel;
+    [SerializeField] GameObject shopPanel;
     public GameObject[] skins;
     public int selectedCharacter;
 
     public Character[] characters;
     public Button unlockButton;
-    public Text coinScoreText;
+    public Sprite buyButtonImage;
+    public Sprite selectedButtonImage;
+    public Sprite selectButtonImage;
+    public TextMeshProUGUI coinScoreText;
     public GameObject Price;
+    public GameObject selectedIcon;
 
     StartSceneController startSceneController;
     private void Awake()
     {
-        skins[selectedCharacter].SetActive(true);
         startSceneController = FindObjectOfType<StartSceneController>();
         selectedCharacter = PlayerPrefs.GetInt("SelectedCharacter", 0);
         foreach (GameObject player in skins)
         {
             player.SetActive(false);
         }
-        skins[selectedCharacter].SetActive(true);
 
         foreach(Character c in characters)
         {
@@ -36,7 +38,12 @@ public class CharacterSelect : MonoBehaviour
                 c.isUnlocked = PlayerPrefs.GetInt(c.name, 0) == 0 ? false : true;
             }
         }
-        UpdateUI();
+       UpdateUI();
+        
+    }
+    private void Start() 
+    {
+        skins[PlayerPrefs.GetInt("SelectedCharacter", 0)].SetActive(true);
     }
 
     public void ChangeNext()
@@ -47,7 +54,7 @@ public class CharacterSelect : MonoBehaviour
             selectedCharacter = 0;
 
         skins[selectedCharacter].SetActive(true);
-        if(characters[selectedCharacter].isUnlocked)
+        if(characters[selectedCharacter].isSelected)
             PlayerPrefs.SetInt("SelectedCharacter", selectedCharacter);
 
         UpdateUI();
@@ -61,7 +68,7 @@ public class CharacterSelect : MonoBehaviour
             selectedCharacter = skins.Length -1;
 
         skins[selectedCharacter].SetActive(true);
-        if (characters[selectedCharacter].isUnlocked)
+        if (characters[selectedCharacter].isSelected)
             PlayerPrefs.SetInt("SelectedCharacter", selectedCharacter);
         UpdateUI();
     }
@@ -72,33 +79,34 @@ public class CharacterSelect : MonoBehaviour
         {
             skins[i].SetActive(false);
         }
-        characterPanel.SetActive(false);
+        shopPanel.SetActive(false);
         startSceneController.characters.SetActive(false);
         startSceneController.startButton.SetActive(true);
         startSceneController.characterButton.SetActive(true);
         startSceneController.settingsPanel.SetActive(false);
         startSceneController.settingsButton.interactable = true;
-        Time.timeScale = 1;
     }
 
     public void UpdateUI()
     {
         coinScoreText.text = ""+ PlayerPrefs.GetInt("MoneyScore",0).ToString();
-        if(characters[selectedCharacter].isUnlocked == true)
-            unlockButton.gameObject.SetActive(false);
-        else
+        if(characters[selectedCharacter].isUnlocked == true && characters[selectedCharacter].isSelected == false)
         {
+            unlockButton.GetComponent<Image>().sprite = selectButtonImage;
+            selectedIcon.SetActive(false);
+            Price.GetComponentInChildren<TextMeshProUGUI>().text ="Free";
+        }
+        if(characters[selectedCharacter].isUnlocked == true && characters[selectedCharacter].isSelected == true)
+        {
+            unlockButton.GetComponent<Image>().sprite = selectedButtonImage;
+            selectedIcon.SetActive(true);
+            Price.GetComponentInChildren<TextMeshProUGUI>().text ="Free";
+        }
+        if(characters[selectedCharacter].isUnlocked == false)
+        {
+            unlockButton.GetComponent<Image>().sprite = buyButtonImage;
+            selectedIcon.SetActive(false);
             Price.GetComponentInChildren<TextMeshProUGUI>().text =""+characters[selectedCharacter].price;
-            if(PlayerPrefs.GetInt("MoneyScore",0)< characters[selectedCharacter].price)
-            {
-                unlockButton.gameObject.SetActive(true);
-                unlockButton.interactable = false;
-            }
-            else
-            {
-                unlockButton.gameObject.SetActive(true);
-                unlockButton.interactable = true;
-            }
         }
     }
 
@@ -106,10 +114,29 @@ public class CharacterSelect : MonoBehaviour
     {
         int coins = PlayerPrefs.GetInt("MoneyScore",0);
         int price = characters[selectedCharacter].price;
-        PlayerPrefs.SetInt("MoneyScore",coins-price);
-        PlayerPrefs.SetInt(characters[selectedCharacter].name,1);
-        PlayerPrefs.SetInt("SelectedCharacter",selectedCharacter);
-        characters[selectedCharacter].isUnlocked = true;
-        UpdateUI();
+        int selectedPlayer=PlayerPrefs.GetInt("SelectedCharacter", 0);
+        
+        if(characters[selectedCharacter].isUnlocked == true && characters[selectedCharacter].isSelected == false)
+        {
+            characters[PlayerPrefs.GetInt("SelectedCharacter", 0)].isSelected = false;
+            PlayerPrefs.SetInt(characters[selectedCharacter].name,1);
+            PlayerPrefs.SetInt("SelectedCharacter",selectedCharacter);
+            characters[selectedCharacter].isSelected = true;
+            UpdateUI();
+        }
+        if(characters[selectedCharacter].isUnlocked == true && characters[selectedCharacter].isSelected == true)
+        {
+            if(PlayerPrefs.GetInt("SelectedCharacter", 0) != selectedCharacter)
+            {
+                
+            }
+        }
+        if(characters[selectedCharacter].isUnlocked == false &&  price <= coins)
+        {
+            characters[selectedCharacter].isUnlocked = true;
+            PlayerPrefs.SetInt(characters[selectedCharacter].name,1);
+            PlayerPrefs.SetInt("MoneyScore",coins-price);
+            UpdateUI();
+        }
     }
 }
