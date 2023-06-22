@@ -12,11 +12,13 @@ public class CharacterSelect : MonoBehaviour
 
     public Character[] characters;
     public Button unlockButton;
-    public Text moneyScoreText;
+    public Text coinScoreText;
+    public GameObject Price;
 
     StartSceneController startSceneController;
     private void Awake()
     {
+        skins[selectedCharacter].SetActive(true);
         startSceneController = FindObjectOfType<StartSceneController>();
         selectedCharacter = PlayerPrefs.GetInt("SelectedCharacter", 0);
         foreach (GameObject player in skins)
@@ -81,12 +83,12 @@ public class CharacterSelect : MonoBehaviour
 
     public void UpdateUI()
     {
-        moneyScoreText.text = ""+ PlayerPrefs.GetInt("MoneyScore",0).ToString();
+        coinScoreText.text = ""+ PlayerPrefs.GetInt("MoneyScore",0).ToString();
         if(characters[selectedCharacter].isUnlocked == true)
             unlockButton.gameObject.SetActive(false);
         else
         {
-            unlockButton.GetComponentInChildren<TextMeshProUGUI>().text =""+characters[selectedCharacter].price;
+            Price.GetComponentInChildren<TextMeshProUGUI>().text =""+characters[selectedCharacter].price;
             if(PlayerPrefs.GetInt("MoneyScore",0)< characters[selectedCharacter].price)
             {
                 unlockButton.gameObject.SetActive(true);
