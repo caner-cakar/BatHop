@@ -9,6 +9,8 @@ public class SettingsPanel : MonoBehaviour
     public GameObject musicBat;
     public GameObject soundButton;
     public GameObject soundBat;
+    public Sprite offButton;
+    public Sprite onButton;
 
 
 
@@ -20,6 +22,7 @@ public class SettingsPanel : MonoBehaviour
             musicButton.transform.GetChild(1).gameObject.SetActive(false);
             musicBat.transform.GetChild(0).gameObject.SetActive(true);
             musicBat.transform.GetChild(1).gameObject.SetActive(false);
+            musicButton.GetComponent<Image>().sprite = onButton;
         }
         else
         {
@@ -27,6 +30,7 @@ public class SettingsPanel : MonoBehaviour
             musicButton.transform.GetChild(1).gameObject.SetActive(true);
             musicBat.transform.GetChild(0).gameObject.SetActive(false);
             musicBat.transform.GetChild(1).gameObject.SetActive(true);
+            musicButton.GetComponent<Image>().sprite = offButton;
         }
         if(PlayerPrefs.GetInt("soundValue",1)==1)
         {
@@ -34,6 +38,7 @@ public class SettingsPanel : MonoBehaviour
             soundButton.transform.GetChild(1).gameObject.SetActive(false);
             soundBat.transform.GetChild(0).gameObject.SetActive(true);
             soundBat.transform.GetChild(1).gameObject.SetActive(false);
+            soundButton.GetComponent<Image>().sprite = onButton;
         }
         else
         {
@@ -41,6 +46,7 @@ public class SettingsPanel : MonoBehaviour
             soundButton.transform.GetChild(1).gameObject.SetActive(true);
             soundBat.transform.GetChild(0).gameObject.SetActive(false);
             soundBat.transform.GetChild(1).gameObject.SetActive(true);
+            soundButton.GetComponent<Image>().sprite = offButton;
         }
     }
 
@@ -53,6 +59,7 @@ public class SettingsPanel : MonoBehaviour
             musicButton.transform.GetChild(1).gameObject.SetActive(true);
             musicBat.transform.GetChild(0).gameObject.SetActive(false);
             musicBat.transform.GetChild(1).gameObject.SetActive(true);
+            musicButton.GetComponent<Image>().sprite = offButton;
             savedMusicValue = 0;
         }
         else
@@ -61,6 +68,7 @@ public class SettingsPanel : MonoBehaviour
             musicButton.transform.GetChild(1).gameObject.SetActive(false);
             musicBat.transform.GetChild(0).gameObject.SetActive(true);
             musicBat.transform.GetChild(1).gameObject.SetActive(false);
+            musicButton.GetComponent<Image>().sprite = onButton;
             savedMusicValue = 1;
         }
         PlayerPrefs.SetInt("musicValue",savedMusicValue);
@@ -75,6 +83,7 @@ public class SettingsPanel : MonoBehaviour
             soundButton.transform.GetChild(1).gameObject.SetActive(true);
             soundBat.transform.GetChild(0).gameObject.SetActive(false);
             soundBat.transform.GetChild(1).gameObject.SetActive(true);
+            soundButton.GetComponent<Image>().sprite = offButton;
             savedSoundValue = 0;
         }
         else
@@ -83,6 +92,7 @@ public class SettingsPanel : MonoBehaviour
             soundButton.transform.GetChild(1).gameObject.SetActive(false);
             soundBat.transform.GetChild(0).gameObject.SetActive(true);
             soundBat.transform.GetChild(1).gameObject.SetActive(false);
+            soundButton.GetComponent<Image>().sprite = onButton;
             savedSoundValue = 1;
         }
         PlayerPrefs.SetInt("soundValue",savedSoundValue);

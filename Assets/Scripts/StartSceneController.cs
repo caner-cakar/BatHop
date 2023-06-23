@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class StartSceneController : MonoBehaviour
 {
     public Button settingsButton;
+    public GameObject panels;
     public GameObject settingsPanel;
     public GameObject characterPanel;
 
@@ -22,6 +23,7 @@ public class StartSceneController : MonoBehaviour
         startButton.SetActive(true);
         characterButton.SetActive(true);
         settingsButton.enabled = true;
+        panels.SetActive(false);
     }
     public void StartGame()
     {
@@ -30,6 +32,7 @@ public class StartSceneController : MonoBehaviour
 
     public void Settings()
     {
+        panels.SetActive(true);
         characters.SetActive(false);
         startButton.SetActive(false);
         characterButton.SetActive(false);
@@ -39,6 +42,7 @@ public class StartSceneController : MonoBehaviour
     }
     public void ExitSettings()
     {
+        panels.SetActive(false);
         characters.SetActive(false);
         characterPanel.SetActive(false);
         settingsPanel.SetActive(false);
@@ -49,6 +53,7 @@ public class StartSceneController : MonoBehaviour
 
     public void CharacterPanel()
     {
+        panels.SetActive(true);
         characters.SetActive(true);
         characterButton.SetActive(false);
         characterPanel.SetActive(true);

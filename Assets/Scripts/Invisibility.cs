@@ -24,6 +24,10 @@ public class Invisibility : MonoBehaviour
             BeInvisible();
             PlayerPrefs.SetInt("playedGameCount",0);
         }
+        if(FindObjectOfType<PlayerMovement>().isDead == true)
+        {
+            Destroy(bats.gameObject);
+        }
     }
 
     public void CountGame()

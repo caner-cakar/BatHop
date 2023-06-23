@@ -5,51 +5,70 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneController : MonoBehaviour
 {
-    [SerializeField] GameObject settingsCanvas;
-    [SerializeField] GameObject deathCanvas;
-
-    private GameObject losePanel;
-    private GameObject highScorePanel;
+    [SerializeField] GameObject panels;
+    [SerializeField] GameObject settingsPanel;
+    [SerializeField] GameObject losePanel;
+    [SerializeField] GameObject highScorePanel;
+    [SerializeField] GameObject yourScorePanel;
 
     public bool isHighScore;
+    public bool isYourScore;
 
     public void Awake()
     {
-        settingsCanvas.SetActive(false);
-        deathCanvas.SetActive(false);
-        losePanel = deathCanvas.transform.Find("LosePanel").gameObject;
-        highScorePanel = deathCanvas.transform.Find("HighScorePanel").gameObject;
-    }
-
-    private void Start() 
-    {
+        panels.SetActive(false);
+        settingsPanel.SetActive(false);
+        losePanel.SetActive(false);
+        highScorePanel.SetActive(false);
+        yourScorePanel.SetActive(false);
     }
 
     public void Settings()
     {
-        settingsCanvas.SetActive(true);
+        panels.SetActive(true);
+        settingsPanel.SetActive(true);
+        losePanel.SetActive(false);
+        highScorePanel.SetActive(false);
+        yourScorePanel.SetActive(false);
         Time.timeScale = 0;
     }
     public void ExitSettings()
     {
-        settingsCanvas.SetActive(false);
+        panels.SetActive(false);
+        settingsPanel.SetActive(false);
+        losePanel.SetActive(false);
+        highScorePanel.SetActive(false);
+        yourScorePanel.SetActive(false);
         Time.timeScale = 1;
     }
 
     public void LosePanel()
     {
         Time.timeScale = 1;
-        deathCanvas.SetActive(true);
+        panels.SetActive(true);
+        settingsPanel.SetActive(false);
         losePanel.SetActive(true);
         highScorePanel.SetActive(false);
+        yourScorePanel.SetActive(false);
     }
 
     public void HighScorePanel()
     {
         Time.timeScale = 1;
-        deathCanvas.SetActive(true);
-        highScorePanel.SetActive(true);
+        panels.SetActive(true);
+        settingsPanel.SetActive(false);
         losePanel.SetActive(false);
+        highScorePanel.SetActive(true);
+        yourScorePanel.SetActive(false);
+    }
+    public void YourScorePanel()
+    {
+        Time.timeScale = 1;
+        panels.SetActive(true);
+        settingsPanel.SetActive(false);
+        losePanel.SetActive(false);
+        highScorePanel.SetActive(false);
+        yourScorePanel.SetActive(true);
     }
 
     public void PlayAgain()
@@ -73,8 +92,10 @@ public class GameSceneController : MonoBehaviour
         FindObjectOfType<CameraController>().StopCamera();
         FindObjectOfType<Score>().StopScore();
         yield return new WaitForSeconds(0.5f);
-        if(!isHighScore)
+        if(!isHighScore && !isYourScore)
             LosePanel();
+        if(isYourScore)
+            YourScorePanel();
         if(isHighScore)
             HighScorePanel();
     }

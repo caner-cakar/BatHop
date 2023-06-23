@@ -80,6 +80,7 @@ public class CharacterSelect : MonoBehaviour
             skins[i].SetActive(false);
         }
         shopPanel.SetActive(false);
+        startSceneController.panels.SetActive(false);
         startSceneController.characters.SetActive(false);
         startSceneController.startButton.SetActive(true);
         startSceneController.characterButton.SetActive(true);
