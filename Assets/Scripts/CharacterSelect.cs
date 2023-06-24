@@ -48,6 +48,7 @@ public class CharacterSelect : MonoBehaviour
 
     public void ChangeNext()
     {
+        
         skins[selectedCharacter].SetActive(false);
         selectedCharacter++;
         if (selectedCharacter == skins.Length)
@@ -90,6 +91,7 @@ public class CharacterSelect : MonoBehaviour
 
     public void UpdateUI()
     {
+        characters[PlayerPrefs.GetInt("SelectedCharacter",0)].isSelected = true;
         coinScoreText.text = ""+ PlayerPrefs.GetInt("MoneyScore",0).ToString();
         if(characters[selectedCharacter].isUnlocked == true && characters[selectedCharacter].isSelected == false)
         {
@@ -124,13 +126,6 @@ public class CharacterSelect : MonoBehaviour
             PlayerPrefs.SetInt("SelectedCharacter",selectedCharacter);
             characters[selectedCharacter].isSelected = true;
             UpdateUI();
-        }
-        if(characters[selectedCharacter].isUnlocked == true && characters[selectedCharacter].isSelected == true)
-        {
-            if(PlayerPrefs.GetInt("SelectedCharacter", 0) != selectedCharacter)
-            {
-                
-            }
         }
         if(characters[selectedCharacter].isUnlocked == false &&  price <= coins)
         {

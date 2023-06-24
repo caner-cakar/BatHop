@@ -74,15 +74,20 @@ public class PlayerMovement : MonoBehaviour
     public void OnCollisionEnter2D(Collision2D other) 
     {
         if(other.gameObject.tag == "Ground" || other.gameObject.tag =="NormalPlatform" 
-        || other.gameObject.tag =="Appear"|| other.gameObject.tag =="BrokenPlatform")
+        || other.gameObject.tag =="BrokenPlatform" || other.gameObject.tag=="Reverse")
         {
             isJumping = false;
             isFalling = false;
             fallTime = 0f;
             Centering(other);
-            if(other.gameObject.tag =="NormalPlatform"|| other.gameObject.tag =="BrokenPlatform")
+            if(other.gameObject.tag =="NormalPlatform"|| other.gameObject.tag =="BrokenPlatform"|| other.gameObject.tag=="Reverse")
                 scoreController.UpdateScore();
-                
+            if (other.gameObject.tag == "Reverse")
+            {
+                cameraController.StopRotateCamera();
+                cameraController.StartRotateCamera();
+                timerController.ExtraTime(7);
+            }
         }
         if(other.gameObject.tag=="CloudPlatform")
         {
@@ -112,14 +117,6 @@ public class PlayerMovement : MonoBehaviour
             timerController.ExtraTime(5);
             Destroy(other.gameObject);
         }
-        if (other.gameObject.tag == "Reverse")
-        {
-            cameraController.StopRotateCamera();
-            cameraController.StartRotateCamera();
-            timerController.ExtraTime(7);
-            Destroy(other.gameObject);
-        }
-
         if(other.gameObject.tag == "Garlic")
         {
             DeathFall();
@@ -178,13 +175,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if(transform.position.x > touchPos.x && !isJumping && !isFalling && !isDead)
         {
-            rb.velocity = new Vector2(jumpX, jumpY);
+            //rb.velocity = new Vector2(jumpX, jumpY);
+            rb.AddForce(new Vector2(jumpX, jumpY), ForceMode2D.Impulse);
             isJumping = true;
             isFalling = true;
         }
         if(transform.position.x < touchPos.x && !isJumping && !isFalling && !isDead)
         {
-            rb.velocity = new Vector2(-jumpX, jumpY);
+            //rb.velocity = new Vector2(-jumpX, jumpY);
+            rb.AddForce(new Vector2(-jumpX, jumpY), ForceMode2D.Impulse);
             isJumping = true;
             isFalling = true;
         }

@@ -147,6 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpY: 16
-  jumpX: -2.9
+  jumpX: -2.8
   isDead: 0
   maxFallTime: 0.13

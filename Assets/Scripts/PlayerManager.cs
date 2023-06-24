@@ -10,6 +10,6 @@ public class PlayerManager : MonoBehaviour
     private void Awake() 
     {
         characterIndex = PlayerPrefs.GetInt("SelectedCharacter",0);
-        Instantiate(playerPrefabs[characterIndex], new Vector3(0f,-2.659852f,0f),Quaternion.identity);   
+        Instantiate(playerPrefabs[characterIndex], new Vector3(0f,-2.497031f,0f),Quaternion.identity);   
     }
 }
