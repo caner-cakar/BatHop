@@ -43,7 +43,9 @@ public class CharacterSelect : MonoBehaviour
     }
     private void Start() 
     {
-        skins[PlayerPrefs.GetInt("SelectedCharacter", 0)].SetActive(true);
+        selectedCharacter = PlayerPrefs.GetInt("SelectedCharacter", 0);
+        skins[selectedCharacter].SetActive(true);
+        selectedIcon.SetActive(true);
     }
 
     public void ChangeNext()
