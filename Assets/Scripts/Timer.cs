@@ -28,7 +28,7 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerY != player.transform.position.y)
+        if(playerY < player.transform.position.y)
         {
             time -= Time.deltaTime;
 
