@@ -36,7 +36,6 @@ public class Score : MonoBehaviour
     {
         if(scoring)
         {
-            scoreText.text = "Score:";
             currentScore++;
             currentScoreText.text = ""+currentScore;
             
@@ -70,11 +69,15 @@ public class Score : MonoBehaviour
 
     public void Update()
     {
-        if(playerY != player.transform.position.y)
+        if(playerY <= player.transform.position.y)
         {
             coinScoreText.text=""+moneyScore;
             currentScoreText.text = ""+currentScore;
             playerY = player.transform.position.y;
+        }
+        if(currentScore>=1)
+        {
+            scoreText.text = "Score:";
         }
     }
 
