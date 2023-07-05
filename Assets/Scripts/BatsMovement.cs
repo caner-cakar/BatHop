@@ -63,10 +63,10 @@ public class BatsMovement : MonoBehaviour
         {
             float randomNumber = Random.Range(0f,0.1f);
             bat.localPosition += new Vector3(0f,randomNumber * Time.deltaTime,0f);
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.1f);
 
             bat.localPosition -= new Vector3(0f,randomNumber * Time.deltaTime,0f);
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
