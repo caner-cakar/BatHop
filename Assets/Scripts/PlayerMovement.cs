@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     SpriteRenderer playerSprite;
     private Rigidbody2D rb;
+    private Animator anim;
 
     public float jumpY = 17f; 
     public float jumpX = -2.9f;
@@ -42,6 +43,11 @@ public class PlayerMovement : MonoBehaviour
         isDead = false;
         rb = GetComponent<Rigidbody2D>();
         playerSprite = GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>();
+        if(PlayerPrefs.GetInt("selectedCharacter",0) == 0)
+        {
+            anim = GetComponent<Animator>();
+        }
+        
     }
 
     void Update()
@@ -56,6 +62,10 @@ public class PlayerMovement : MonoBehaviour
                 DeathFall();
                 StartCoroutine(gameSceneController.DeathLogic());
             }
+        }
+        if(PlayerPrefs.GetInt("selectedCharacter",0) == 0)
+        {
+            UpdateAnimation();
         }
     }
 
@@ -218,5 +228,21 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, targetRotation);
     }
 
-
+    private void UpdateAnimation()
+    {
+        if(rb.velocity.x > 0f && rb.velocity.y> 0.1f)
+        {
+            playerSprite.flipX = true;
+            anim.SetBool("isJumping",true);
+        }
+        if(rb.velocity.x < 0f  && rb.velocity.y> 0.1f)
+        {
+            playerSprite.flipX = false;
+            anim.SetBool("isJumping",true);
+        }
+        if(rb.velocity.y< 0.1f)
+        {
+            anim.SetBool("isJumping",false);
+        }
+    }
 }
