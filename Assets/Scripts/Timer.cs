@@ -12,6 +12,7 @@ public class Timer : MonoBehaviour
     const float gameTime = 45f;
     float time;
     GameObject player;
+    GameSceneController gameSceneController;
 
     void Awake()
     {
@@ -23,6 +24,7 @@ public class Timer : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerY = player.transform.position.y;
+        gameSceneController = FindObjectOfType<GameSceneController>();
     }
 
     // Update is called once per frame
@@ -34,7 +36,7 @@ public class Timer : MonoBehaviour
 
             if (time <= 0f)
             {
-                StartCoroutine(RestartGame());
+                StartCoroutine(gameSceneController.DeathLogic());
             }
             if(time>=45f)
                 time = 45f;

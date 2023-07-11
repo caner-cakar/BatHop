@@ -14,6 +14,8 @@ public class BatsMovement : MonoBehaviour
     bool onPlayer=false;
     public bool isPlayerDead = false;
 
+    float targetSpeed = 7.5f;
+
     void Start()
     {
         scoreController = FindObjectOfType<Score>();
@@ -32,7 +34,7 @@ public class BatsMovement : MonoBehaviour
     void Update()
     {
         MoveTowardsTarget();
-        StartCoroutine(ShakeBats());
+        //StartCoroutine(ShakeBats());
         if(scoreController.currentScore>visibleScore+20f && onPlayer)
         {
             BatsGetAway();
@@ -41,32 +43,21 @@ public class BatsMovement : MonoBehaviour
 
     private void MoveTowardsTarget()
     {
-        if(isPlayerDead==false)
+        if(isPlayerDead==false && !onPlayer)
         {
             Vector3 targetPosition = targetObject.transform.position;
             Vector3 direction = targetPosition - gameObject.transform.position;
-            gameObject.transform.Translate(direction.normalized * 5f * Time.deltaTime);
+            gameObject.transform.Translate(direction.normalized * targetSpeed *Time.deltaTime);
             lastChildDistance = Vector3.Distance(lastChild.position,targetObject.transform.position);
             
         }
         
-        if(lastChildDistance<0.1f && !onPlayer )
+        if(lastChildDistance<0.15f && !onPlayer )
         {
             visibleScore = scoreController.currentScore;
             onPlayer = true;
-        }
-    }
-
-    IEnumerator ShakeBats()
-    {
-        foreach (Transform bat in bats)
-        {
-            float randomNumber = Random.Range(0f,0.1f);
-            bat.localPosition += new Vector3(0f,randomNumber * Time.deltaTime,0f);
-            yield return new WaitForSeconds(0.5f);
-
-            bat.localPosition -= new Vector3(0f,randomNumber * Time.deltaTime,0f);
-            yield return new WaitForSeconds(0.5f);
+            targetSpeed = 5f;
+            transform.SetParent(targetObject.transform);
         }
     }
 
@@ -75,7 +66,9 @@ public class BatsMovement : MonoBehaviour
         foreach (Transform bat in bats)
         {
             float randomNumber = Random.Range(0f,5f);
-            bat.localPosition -= new Vector3(0f,randomNumber * Time.deltaTime,0f);
+            Vector3 targetPosition = targetObject.transform.position;
+            Vector3 direction = targetPosition - new Vector3(10f,0f);
+            bat.transform.Translate(-direction.normalized * randomNumber *Time.deltaTime);
         
         }
         isPlayerDead = true;
