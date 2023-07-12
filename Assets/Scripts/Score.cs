@@ -32,11 +32,11 @@ public class Score : MonoBehaviour
         playerY = player.transform.position.y;
     }
 
-    public void UpdateScore()
+    public void UpdateScore(int score)
     {
         if(scoring)
         {
-            currentScore++;
+            currentScore += score;
             currentScoreText.text = ""+currentScore;
             
 
@@ -46,7 +46,7 @@ public class Score : MonoBehaviour
                 highScoreText.text = ""+PlayerPrefs.GetInt("HighScore", 0).ToString();
                 FindObjectOfType<GameSceneController>().isHighScore = true;
             }
-            if(currentScore>10)
+            else if(currentScore>100)
             {
                 yourScoreText.text = ""+currentScore;
                 FindObjectOfType<GameSceneController>().isYourScore = true;

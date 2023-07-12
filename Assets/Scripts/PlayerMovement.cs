@@ -90,8 +90,10 @@ public class PlayerMovement : MonoBehaviour
             isFalling = false;
             fallTime = 0f;
             Centering(other);
-            if(other.gameObject.tag =="NormalPlatform"|| other.gameObject.tag =="BrokenPlatform"|| other.gameObject.tag=="Reverse")
-                scoreController.UpdateScore();
+            if(other.gameObject.tag =="NormalPlatform"|| other.gameObject.tag=="Reverse")
+                scoreController.UpdateScore(10);
+            if (other.gameObject.tag == "BrokenPlatform")
+                scoreController.UpdateScore(15);
             if (other.gameObject.tag == "Reverse")
             {
                 cameraController.StopRotateCamera();
@@ -139,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
         if(other.gameObject.tag == "BrokenPlatform")
         {
             onBrokenPlatform = false;
-            Destroy(other.gameObject);
+            FindObjectOfType<PlatformController>().CallForBreak(other);
         }
     }
     
@@ -150,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
         {
             DeathFall();
             StartCoroutine(gameSceneController.DeathLogic());
-            Destroy(other.gameObject);   
+            FindObjectOfType<PlatformController>().CallForBreak(other);
         }
     }
     private void Centering(Collision2D other)

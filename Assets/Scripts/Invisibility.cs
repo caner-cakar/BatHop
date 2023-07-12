@@ -19,7 +19,7 @@ public class Invisibility : MonoBehaviour
 
     void Update()
     {
-        if(playedGameCount >=2f && score.currentScore >=5f && bats != null)
+        if(playedGameCount >=2f && score.currentScore >=100f && bats != null)
         {
             BeInvisible();
             PlayerPrefs.SetInt("playedGameCount",0);
