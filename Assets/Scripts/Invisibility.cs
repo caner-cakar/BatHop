@@ -19,12 +19,12 @@ public class Invisibility : MonoBehaviour
 
     void Update()
     {
-        if(playedGameCount >=2f && score.currentScore >=100f && bats != null)
+        if(playedGameCount >=5f && score.currentScore >=1000f && bats != null)
         {
             BeInvisible();
             PlayerPrefs.SetInt("playedGameCount",0);
         }
-        if(playedGameCount<2)
+        if(playedGameCount<5f)
             Destroy(bats.gameObject);
         if(FindObjectOfType<PlayerMovement>().isDead == true)
         {

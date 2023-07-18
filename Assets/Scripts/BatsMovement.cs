@@ -14,7 +14,7 @@ public class BatsMovement : MonoBehaviour
     bool onPlayer=false;
     public bool isPlayerDead = false;
 
-    float targetSpeed = 7.5f;
+    float targetSpeed = 10f;
 
     void Start()
     {
@@ -35,7 +35,7 @@ public class BatsMovement : MonoBehaviour
     {
         MoveTowardsTarget();
         //StartCoroutine(ShakeBats());
-        if(scoreController.currentScore>visibleScore+200f && onPlayer)
+        if(scoreController.currentScore>visibleScore+150f && onPlayer)
         {
             transform.SetParent(null);
             BatsGetAway();

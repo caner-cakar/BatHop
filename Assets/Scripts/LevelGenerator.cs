@@ -63,19 +63,13 @@ public class LevelGenerator : MonoBehaviour
     {
         
         Transform choosenLevelPart = levelPatternList[Random.Range(0,levelPatternList.Count)];
-        if(beforeLevelPart == choosenLevelPart)
+        while(choosenLevelPart== beforeLevelPart)
         {
-            while(beforeLevelPart == choosenLevelPart){choosenLevelPart = levelPatternList[Random.Range(0,levelPatternList.Count)];
-            }
-            beforeLevelPart = choosenLevelPart;
+            choosenLevelPart = levelPatternList[Random.Range(0,levelPatternList.Count)];
         }
-        else
-        {
-            beforeLevelPart = choosenLevelPart;
-        }
-        Transform lastLevelPartTransform = SpawnLevelPart(choosenLevelPart,lastEndPosition);
+        Transform lastLevelPartTransform = SpawnLevelPart(choosenLevelPart,lastEndPosition); 
+        beforeLevelPart = choosenLevelPart;
         lastEndPosition = lastLevelPartTransform.Find("EndPosition").position;
-
         spawnedLevelParts.Add(lastLevelPartTransform);
     }
     private Transform SpawnLevelPart(Transform levelPart,Vector3 spawnPosition)

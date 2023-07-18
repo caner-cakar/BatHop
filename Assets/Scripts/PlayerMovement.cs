@@ -90,10 +90,14 @@ public class PlayerMovement : MonoBehaviour
             isFalling = false;
             fallTime = 0f;
             Centering(other);
-            if(other.gameObject.tag =="NormalPlatform"|| other.gameObject.tag=="Reverse")
+            if((other.gameObject.tag =="NormalPlatform"|| other.gameObject.tag=="Reverse") && cameraController.isCamera == false)
                 scoreController.UpdateScore(10);
-            if (other.gameObject.tag == "BrokenPlatform")
+            if((other.gameObject.tag =="NormalPlatform"|| other.gameObject.tag=="Reverse") && cameraController.isCamera == true)
                 scoreController.UpdateScore(15);
+            if (other.gameObject.tag == "BrokenPlatform" && cameraController.isCamera == false)
+                scoreController.UpdateScore(15);
+            if (other.gameObject.tag == "BrokenPlatform" && cameraController.isCamera == true)
+                scoreController.UpdateScore(30);
             if (other.gameObject.tag == "Reverse")
             {
                 cameraController.StopRotateCamera();

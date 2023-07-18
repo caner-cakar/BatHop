@@ -13,6 +13,7 @@ public class CameraController: MonoBehaviour
     private bool isCameraWork = true;
 
     private Coroutine rotateCameraCoroutine;
+    public bool isCamera;
 
     void Start()
     {
@@ -57,8 +58,10 @@ public class CameraController: MonoBehaviour
     private IEnumerator RotateCameraCoroutine()
     {
         Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
+        isCamera = true;
         yield return new WaitForSeconds(5f);
         Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        isCamera = false;
     }
 
     public void StopCamera()
