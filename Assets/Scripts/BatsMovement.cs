@@ -16,6 +16,8 @@ public class BatsMovement : MonoBehaviour
 
     float targetSpeed = 10f;
 
+    float timeCount;
+
     void Start()
     {
         scoreController = FindObjectOfType<Score>();
@@ -35,10 +37,15 @@ public class BatsMovement : MonoBehaviour
     {
         MoveTowardsTarget();
         //StartCoroutine(ShakeBats());
-        if(scoreController.currentScore>visibleScore+150f && onPlayer)
+        
+        if(timeCount>visibleScore+15f && onPlayer)
         {
             transform.SetParent(null);
             BatsGetAway();
+        }
+        if(timeCount<=visibleScore+15f && onPlayer)
+        {
+            timeCount += Time.deltaTime;
         }
     }
 
@@ -55,7 +62,7 @@ public class BatsMovement : MonoBehaviour
         
         if(lastChildDistance<0.15f && !onPlayer )
         {
-            visibleScore = scoreController.currentScore;
+            visibleScore = 0f;
             onPlayer = true;
             targetSpeed = 5f;
             transform.SetParent(targetObject.transform);
