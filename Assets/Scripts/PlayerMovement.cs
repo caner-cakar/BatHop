@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping = false;
     private bool isFalling = false;
     public bool isDead = false;
+    bool isDeadSong;
 
     private float fallTime = 0f;
     [SerializeField] float maxFallTime = 0.3f;
@@ -100,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
                 scoreController.UpdateScore(30);
             if (other.gameObject.tag == "Reverse")
             {
+                SfxSounds("Reverse");
                 cameraController.StopRotateCamera();
                 cameraController.StartRotateCamera();
                 timerController.ExtraTime(7);
@@ -125,11 +127,13 @@ public class PlayerMovement : MonoBehaviour
         }
         if(other.gameObject.tag == "Star")
         {
+            SfxSounds("Coin");
             scoreController.UpdateMoney();
             Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "Health")
         {
+            SfxSounds("Health");
             timerController.ExtraTime(5);
             Destroy(other.gameObject);
         }
@@ -207,6 +211,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void DeathFall()
     {
+        SfxSounds("Dead");
         isDead = true;
         playerSprite.enabled=true;
         StartCoroutine(RotateForDuration(2f));
@@ -249,6 +254,42 @@ public class PlayerMovement : MonoBehaviour
         if(rb.velocity.y< 0.1f)
         {
             anim.SetBool("isJumping",false);
+        }
+    }
+
+    public void DeadSong()
+    {
+        if(isDeadSong == false)
+        {
+            AudioManager.Instance.PlaySFX("Dead");
+            isDeadSong = true;
+        }
+    }
+
+    public void SfxSounds(string name)
+    {
+        if(PlayerPrefs.GetInt("soundValue",1)==1)
+        {
+            if(name == "Coin")
+            {
+                AudioManager.Instance.PlaySFX("Coin");
+            }   
+            if(name == "Health")
+            {
+                AudioManager.Instance.PlaySFX("Health");
+            }
+            if(name == "Reverse")
+            {
+                AudioManager.Instance.PlaySFX("Reverse");
+            }
+            if(name == "Dead")
+            {
+                DeadSong();
+            }
+        }
+        else if(PlayerPrefs.GetInt("soundValue",1)==0)
+        {
+            AudioManager.Instance.sfxSource.Stop();
         }
     }
 }

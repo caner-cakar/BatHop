@@ -73,6 +73,7 @@ public class GameSceneController : MonoBehaviour
 
     public void PlayAgain()
     {
+        AudioManager.Instance.sfxSource.Stop();
         Score score1 = gameObject.AddComponent<Score>();
         score1.KeepScore();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
