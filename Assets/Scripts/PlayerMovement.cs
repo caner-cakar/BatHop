@@ -101,9 +101,9 @@ public class PlayerMovement : MonoBehaviour
                 scoreController.UpdateScore(30);
             if (other.gameObject.tag == "Reverse")
             {
-                SfxSounds("Reverse");
                 cameraController.StopRotateCamera();
                 cameraController.StartRotateCamera();
+                SfxSounds("Reverse");
                 timerController.ExtraTime(7);
             }
         }

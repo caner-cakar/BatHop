@@ -9,6 +9,7 @@ public class CameraController: MonoBehaviour
     public float followSpeed=5f;
     public Vector3 offset;
 
+    float rotateValue;
     
     private bool isCameraWork = true;
 
@@ -57,11 +58,24 @@ public class CameraController: MonoBehaviour
 
     private IEnumerator RotateCameraCoroutine()
     {
-        Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
-        isCamera = true;
-        yield return new WaitForSeconds(5f);
-        Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        isCamera = false;
+        if(PlayerPrefs.GetInt("soundValue",1)==1)
+            AudioManager.Instance.sfxSource.Stop();   
+        if(isCamera)
+        {
+            rotateValue = 0f;
+            Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, rotateValue);
+            isCamera = false;
+        }
+        else
+        {
+            rotateValue = 180f;
+            Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, rotateValue);
+            isCamera = true;
+            yield return new WaitForSeconds(5f);
+            Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            isCamera = false;
+        }
+       
     }
 
     public void StopCamera()
