@@ -91,6 +91,7 @@ public class GameSceneController : MonoBehaviour
             FindObjectOfType<BatsMovement>().isPlayerDead = true;
         FindObjectOfType<PlayerMovement>().isDead = true;
         FindObjectOfType<CameraController>().StopCamera();
+        FindObjectOfType<Timer>().isTime = false;
         FindObjectOfType<Score>().StopScore();
         yield return new WaitForSeconds(0.5f);
         if(!isHighScore && !isYourScore)

@@ -7,16 +7,16 @@ public class BrokenPlatform : MonoBehaviour
     public IEnumerator LetsBreak()
     {
         float elapsedTime = 0f;
+        float randomNumberA = Random.Range(0.5f,2f);
+        float randomNumberB = Random.Range(0.5f,2f);
+        float randomNumberC = Random.Range(0.5f,2f);
         while (elapsedTime < 3f)
         {
-            float randomNumber = Random.Range(0f,1.5f);
             Vector3 targetPosition = FindObjectOfType<PlayerMovement>().transform.position;
             Vector3 direction = targetPosition + new Vector3(0f,5f);
-            transform.GetChild(0).Translate(-direction.normalized * randomNumber *Time.deltaTime);
-            randomNumber = Random.Range(0f,2f);
-            transform.GetChild(1).Translate(-direction.normalized * randomNumber *Time.deltaTime);
-            randomNumber = Random.Range(0f,3f);
-            transform.GetChild(2).Translate(-direction.normalized * randomNumber *Time.deltaTime);
+            transform.GetChild(0).Translate(-direction.normalized * randomNumberA *Time.deltaTime);
+            transform.GetChild(1).Translate(-direction.normalized * randomNumberB *Time.deltaTime);
+            transform.GetChild(2).Translate(-direction.normalized * randomNumberC *Time.deltaTime);
             yield return null;
             elapsedTime += Time.deltaTime;
         }

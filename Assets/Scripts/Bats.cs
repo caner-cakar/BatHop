@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Invisibility : MonoBehaviour
+public class Bats : MonoBehaviour
 {
     private int playedGameCount = 0;
     private Score score;

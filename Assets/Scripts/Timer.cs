@@ -11,11 +11,14 @@ public class Timer : MonoBehaviour
     float playerY;
     const float gameTime = 45f;
     float time;
+    public bool isTime;
+
     GameObject player;
     GameSceneController gameSceneController;
 
     void Awake()
     {
+        isTime = true;
         healthSlider.maxValue = gameTime;
         healthSlider.value = gameTime;
         time = gameTime;
@@ -30,7 +33,7 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerY < player.transform.position.y)
+        if(playerY < player.transform.position.y && isTime)
         {
             time -= Time.deltaTime;
 
