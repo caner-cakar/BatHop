@@ -54,6 +54,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    
+
     public void PlaySFX(string name)
     {
         Sound s = Array.Find(sfxSounds, x => x.name == name);
@@ -66,7 +68,13 @@ public class AudioManager : MonoBehaviour
         else 
         {
             sfxSource.PlayOneShot(s.clip);
+            
         }
+    }
+
+    public void StopSFX()
+    {
+        sfxSource.Stop();
     }
 
     public void themeSound(string name)

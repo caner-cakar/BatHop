@@ -13,7 +13,10 @@ public class LevelGenerator : MonoBehaviour
     private List<Transform> spawnedLevelParts = new List<Transform>();
 
     private Transform beforeLevelPart = null;
+    private Transform beforeBeforeLevelPart = null;
     private Vector3 lastEndPosition;
+
+    int levelCounter=0;
 
     private void Awake()
     {
@@ -28,6 +31,7 @@ public class LevelGenerator : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
     }
+
     private void Update() 
     {
         float characterPosY = player.transform.position.y;
@@ -57,26 +61,41 @@ public class LevelGenerator : MonoBehaviour
                 i--;
             }
         }
-
     }
+
     private void SpawnLevelPart()
     {
-        
-        Transform choosenLevelPart = levelPatternList[Random.Range(0,levelPatternList.Count)];
-        while(choosenLevelPart== beforeLevelPart)
-        {
-            choosenLevelPart = levelPatternList[Random.Range(0,levelPatternList.Count)];
-        }
-        Transform lastLevelPartTransform = SpawnLevelPart(choosenLevelPart,lastEndPosition); 
+        Transform choosenLevelPart = GetRandomLevelPart();
+        Transform lastLevelPartTransform = SpawnLevelPart(choosenLevelPart, lastEndPosition); 
         beforeLevelPart = choosenLevelPart;
         lastEndPosition = lastLevelPartTransform.Find("EndPosition").position;
         spawnedLevelParts.Add(lastLevelPartTransform);
     }
-    private Transform SpawnLevelPart(Transform levelPart,Vector3 spawnPosition)
+
+    private Transform GetRandomLevelPart()
     {
-        Transform levelPartTransform = Instantiate(levelPart,spawnPosition,Quaternion.identity);
-        return levelPartTransform;
+        List<Transform> availableLevelParts = new List<Transform>(levelPatternList);
+        // Remove the last two chosen level parts from the available list
+        if (beforeLevelPart != null)
+        {
+            availableLevelParts.Remove(beforeLevelPart);
+            if (beforeBeforeLevelPart != null)
+            {
+                availableLevelParts.Remove(beforeBeforeLevelPart);
+            }
+        }
+
+        beforeBeforeLevelPart = beforeLevelPart;
+
+
+        Transform choosenLevelPart = availableLevelParts[Random.Range(0, availableLevelParts.Count)];
+        return choosenLevelPart;
     }
 
-    
+
+    private Transform SpawnLevelPart(Transform levelPart, Vector3 spawnPosition)
+    {
+        Transform levelPartTransform = Instantiate(levelPart, spawnPosition, Quaternion.identity);
+        return levelPartTransform;
+    }
 }

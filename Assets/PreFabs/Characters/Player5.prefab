@@ -150,3 +150,5 @@ MonoBehaviour:
   jumpX: -2.8
   isDead: 0
   maxFallTime: 0.13
+  playerLastPos: {x: 0, y: 0, z: 0}
+  brokenPlatformPreFab: {fileID: 5846506634184378852, guid: e7ce08cabd830dc48861119a68fb308b, type: 3}

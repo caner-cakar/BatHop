@@ -1,0 +1,6 @@
+<dependencies>
+<androidPackages>
+<androidPackage spec="androidx.fragment:fragment:1.1.0" />
+<androidPackage spec="com.google.android.recaptcha:recaptcha:18.4.0" />  
+</androidPackages>
+</dependencies>

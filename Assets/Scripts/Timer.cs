@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour
     //[SerializeField] Transform player;
     float playerY;
     const float gameTime = 45f;
-    float time;
+    public float time;
     public bool isTime;
 
     GameObject player;

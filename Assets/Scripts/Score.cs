@@ -45,6 +45,7 @@ public class Score : MonoBehaviour
                 PlayerPrefs.SetInt("HighScore", currentScore);
                 highScoreText.text = ""+PlayerPrefs.GetInt("HighScore", 0).ToString();
                 FindObjectOfType<GameSceneController>().isHighScore = true;
+                FirebaseController.instance.PostHighScoreToDatabase(PlayerPrefs.GetInt("HighScore", 0));
             }
             else if(currentScore>100)
             {
@@ -64,7 +65,7 @@ public class Score : MonoBehaviour
         coinScoreText.text=""+moneyScore;
         int money = PlayerPrefs.GetInt("MoneyScore");
         PlayerPrefs.SetInt("MoneyScore",money+1);
-        
+        //FirebaseController.instance.PostMoneyScoreToDatabase(PlayerPrefs.GetInt("MoneyScore"));
     }
 
     public void Update()

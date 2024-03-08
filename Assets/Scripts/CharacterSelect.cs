@@ -86,13 +86,17 @@ public class CharacterSelect : MonoBehaviour
         startSceneController.panels.SetActive(false);
         startSceneController.characters.SetActive(false);
         startSceneController.startButton.SetActive(true);
+        startSceneController.leaderboardButton.SetActive(true);
         startSceneController.characterButton.SetActive(true);
         startSceneController.settingsPanel.SetActive(false);
+        startSceneController.leaderboardPanel.SetActive(false);
         startSceneController.settingsButton.interactable = true;
+        startSceneController.accountChangeButton.interactable = true;
     }
 
     public void UpdateUI()
     {
+
         characters[PlayerPrefs.GetInt("SelectedCharacter",0)].isSelected = true;
         coinScoreText.text = ""+ PlayerPrefs.GetInt("MoneyScore",0).ToString();
         if(characters[selectedCharacter].isUnlocked == true && characters[selectedCharacter].isSelected == false)
@@ -134,6 +138,7 @@ public class CharacterSelect : MonoBehaviour
             characters[selectedCharacter].isUnlocked = true;
             PlayerPrefs.SetInt(characters[selectedCharacter].name,1);
             PlayerPrefs.SetInt("MoneyScore",coins-price);
+            //FirebaseController.instance.PostMoneyScoreToDatabase(PlayerPrefs.GetInt("MoneyScore"));
             UpdateUI();
         }
     }

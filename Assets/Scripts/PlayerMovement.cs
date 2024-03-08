@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -31,9 +32,16 @@ public class PlayerMovement : MonoBehaviour
     Vector3 characterPos;
     Vector3 centerPos;
     Vector2 touchPos;    
+    private Coroutine rotateForDuration;
 
     float time;
-    
+
+    public Vector3 playerLastPos;
+    bool isPlayerDeadBefore;
+    bool lastPlatformBroken;
+    Vector3 lastBrokenPlatformPos;
+    [SerializeField] GameObject brokenPlatformPreFab;
+    Transform lastBrokenPlatformTransform;
 
     void Start()
     {
@@ -49,6 +57,41 @@ public class PlayerMovement : MonoBehaviour
             anim = GetComponent<Animator>();
         }
         
+    }
+    
+    public void StartFromLastPos()
+    {   
+        isPlayerDeadBefore = true;
+        if(lastPlatformBroken)
+        {
+            GameObject newBrokenPlatform = Instantiate(brokenPlatformPreFab, lastBrokenPlatformTransform);
+            newBrokenPlatform.transform.position = lastBrokenPlatformPos;
+        }
+
+        isDead = false;
+        GetComponent<BoxCollider2D>().enabled = false;
+        rb.gravityScale = 10f;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        StopRotation();
+        transform.position = playerLastPos;
+        time = 0f;
+        rb.gravityScale = 10f;
+        GetComponent<BoxCollider2D>().enabled = true;
+        cameraController.RunCamera();
+        onBrokenPlatform = false;
+        playerSprite.enabled=true;
+        gameSceneController.panels.SetActive(false);
+        isFalling = false;
+        fallTime =0f;
+        gameSceneController.alreadyCalled = false;
+        scoreController.KeepScore();
+        scoreController.currentScore = scoreController.currentScore -10;
+        timerController.isTime = true;
+        if(FindObjectOfType<BatsMovement>() != null)
+            FindObjectOfType<BatsMovement>().isPlayerDead = true;
+
+        isPlayerDeadBefore = false;
+        isDeadSong = false;
     }
 
     void Update()
@@ -92,15 +135,32 @@ public class PlayerMovement : MonoBehaviour
             fallTime = 0f;
             Centering(other);
             if((other.gameObject.tag =="NormalPlatform"|| other.gameObject.tag=="Reverse") && cameraController.isCamera == false)
+            {
+                lastPlatformBroken = false;
                 scoreController.UpdateScore(10);
+            }
             if((other.gameObject.tag =="NormalPlatform"|| other.gameObject.tag=="Reverse") && cameraController.isCamera == true)
+            {
+                lastPlatformBroken = false;
                 scoreController.UpdateScore(15);
+            }
             if (other.gameObject.tag == "BrokenPlatform" && cameraController.isCamera == false)
+            {
+                lastPlatformBroken = true;
                 scoreController.UpdateScore(15);
+                lastBrokenPlatformPos = other.gameObject.transform.position;
+                lastBrokenPlatformTransform = other.gameObject.transform.parent;
+            }
             if (other.gameObject.tag == "BrokenPlatform" && cameraController.isCamera == true)
+            {
+                lastPlatformBroken = true;
                 scoreController.UpdateScore(30);
+                lastBrokenPlatformPos = other.gameObject.transform.position;
+                lastBrokenPlatformTransform = other.gameObject.transform.parent;
+            }
             if (other.gameObject.tag == "Reverse")
             {
+                lastPlatformBroken = false;
                 cameraController.StopRotateCamera();
                 cameraController.StartRotateCamera();
                 SfxSounds("Reverse");
@@ -127,15 +187,15 @@ public class PlayerMovement : MonoBehaviour
         }
         if(other.gameObject.tag == "Star")
         {
-            SfxSounds("Coin");
             scoreController.UpdateMoney();
             Destroy(other.gameObject);
+            SfxSounds("Coin");
         }
         if(other.gameObject.tag == "Health")
         {
+            Destroy(other.gameObject);
             SfxSounds("Health");
             timerController.ExtraTime(5);
-            Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "Garlic")
         {
@@ -173,6 +233,8 @@ public class PlayerMovement : MonoBehaviour
                 characterPos.x = centerPos.x; 
                 transform.position = characterPos;
                 isCenter = true;
+                if(other.gameObject.tag =="NormalPlatform" || other.gameObject.tag=="Reverse" )
+                    playerLastPos = gameObject.transform.position;
             }
             else
             {
@@ -214,21 +276,23 @@ public class PlayerMovement : MonoBehaviour
         SfxSounds("Dead");
         isDead = true;
         playerSprite.enabled=true;
-        StartCoroutine(RotateForDuration(2f));
+        StartRotation();
         GetComponent<BoxCollider2D>().enabled = false;
         rb.gravityScale = 1f;
         rb.velocity = new Vector3(0f, -2f, 0f);
+        
+        
     }
 
-    private IEnumerator RotateForDuration(float duration)
+    private IEnumerator RotateForDuration()
     {
         float startRotation = transform.rotation.eulerAngles.z;
-        float targetRotation = startRotation + (360f * duration);
+        float targetRotation = startRotation + (360f * 1f);
         float elapsedTime = 0f;
 
-        while (elapsedTime < duration)
+        while (elapsedTime < 1f)
         {
-            float t = elapsedTime / duration;
+            float t = elapsedTime / 1f;
             float currentRotation = Mathf.Lerp(startRotation, targetRotation, t);
             transform.rotation = Quaternion.Euler(0f, 0f, currentRotation);
 
@@ -237,6 +301,23 @@ public class PlayerMovement : MonoBehaviour
         }
 
         transform.rotation = Quaternion.Euler(0f, 0f, targetRotation);
+    }
+
+    public void StartRotation()
+    {
+        if (rotateForDuration == null)
+        {
+            rotateForDuration = StartCoroutine(RotateForDuration());
+        }
+    }
+
+    public void StopRotation()
+    {
+        if (rotateForDuration != null)
+        {
+            StopCoroutine(rotateForDuration);
+            rotateForDuration = null;
+        }
     }
 
     private void UpdateAnimation()
@@ -262,7 +343,7 @@ public class PlayerMovement : MonoBehaviour
         if(isDeadSong == false)
         {
             AudioManager.Instance.PlaySFX("Dead");
-            isDeadSong = true;
+            isDeadSong =true;
         }
     }
 

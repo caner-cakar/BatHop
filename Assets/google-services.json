@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "768739751593",
+    "firebase_url": "https://bathop-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "bathop",
+    "storage_bucket": "bathop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768739751593:android:a3ee0c9870e1a098f1dbb8",
+        "android_client_info": {
+          "package_name": "com.aksoycozum.bathop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768739751593-gbbtimd5amh3ls7fa1u22oue8qb7am7i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aksoycozum.bathop",
+            "certificate_hash": "8daa5ffdb09db82dd4d20c7ab11a6f9727fc93a6"
+          }
+        },
+        {
+          "client_id": "768739751593-ljsqurbulof1b6hqj775jmaankb1rft2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_JHvfzbIFZ1jKTCEwHnBeA06WZ4g_W1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768739751593-ljsqurbulof1b6hqj775jmaankb1rft2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
